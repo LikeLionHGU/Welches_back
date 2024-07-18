@@ -1,9 +1,7 @@
-package likelion.summer.welches.communityPost.domain.entity;
+package likelion.summer.welches.communityPostComment.domain.entity;
 
 import jakarta.persistence.*;
-import likelion.summer.welches.commons.entity.BaseEntity;
-import likelion.summer.welches.communityPostComment.domain.entity.CommunityPostComment;
-import likelion.summer.welches.project.domain.entity.Project;
+import likelion.summer.welches.communityPost.domain.entity.CommunityPost;
 import likelion.summer.welches.user.domain.entity.User;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -11,7 +9,6 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Getter
@@ -20,7 +17,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-public class CommunityPost extends BaseEntity {
+public class CommunityPostComment {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -29,12 +27,8 @@ public class CommunityPost extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
-
     @ManyToOne(fetch = FetchType.LAZY)
-    private Project project;
-
-    @OneToMany(mappedBy = "communityPost", cascade = CascadeType.ALL)
-    private List<CommunityPostComment> communityPostComment;
+    private CommunityPost communityPost;
 
     @CreatedDate
     private LocalDateTime createdDate;
@@ -42,10 +36,10 @@ public class CommunityPost extends BaseEntity {
     @LastModifiedDate
     private LocalDateTime updatedDate;
 
-    public static CommunityPost toAdd(User user, Project project, String contents) {
-        return CommunityPost.builder()
+    public static CommunityPostComment toAdd(User user, CommunityPost communityPost, String contents) {
+        return CommunityPostComment.builder()
                 .user(user)
-                .project(project)
+                .communityPost(communityPost)
                 .contents(contents)
                 .build();
     }

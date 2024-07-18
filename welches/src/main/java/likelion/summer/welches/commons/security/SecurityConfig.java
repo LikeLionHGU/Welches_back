@@ -53,6 +53,8 @@ public class SecurityConfig {
 
                 .requestMatchers("/post/community/**").permitAll()
 
+                .requestMatchers("/community/comment/**").permitAll()
+
 
                 .requestMatchers("/login/oauth2/**").permitAll()
                 .requestMatchers("/api/v1/oauth2/google").permitAll()
