@@ -4,6 +4,7 @@ import likelion.summer.welches.project.domain.repository.ProjectRepository;
 import likelion.summer.welches.user.domain.repository.UserRepository;
 import likelion.summer.welches.userApplication.domain.entity.UserApplication;
 import likelion.summer.welches.userApplication.domain.repository.UserApplicationRepository;
+import likelion.summer.welches.userProject.application.service.UserProjectService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +15,7 @@ public class UserApplicationService {
     private final UserApplicationRepository userApplicationRepository;
     private final UserRepository userRepository;
     private final ProjectRepository projectRepository;
+    private final UserProjectService userProjectService;
 
     @Transactional
     public Long addRequest(String userId, Long projectId) {
@@ -27,5 +29,10 @@ public class UserApplicationService {
         userApplicationRepository.delete(userApplication);
 
         return id;
+    }
+
+    @Transactional
+    public Long approveUserRequest(String userId, Long projectId) {
+        return userProjectService.addProjectUser(userId, projectId);
     }
 }

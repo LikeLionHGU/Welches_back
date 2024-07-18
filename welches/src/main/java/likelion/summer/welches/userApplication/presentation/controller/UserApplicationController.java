@@ -3,6 +3,7 @@ package likelion.summer.welches.userApplication.presentation.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import likelion.summer.welches.commons.jwt.JWTProvider;
 import likelion.summer.welches.userApplication.application.service.UserApplicationService;
+import likelion.summer.welches.userApplication.presentation.request.UserApplicationApproveRequest;
 import likelion.summer.welches.userApplication.presentation.request.UserApplicationDeleteRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -24,5 +25,12 @@ public class UserApplicationController {
     @DeleteMapping("/project/application/delete")
     public ResponseEntity<Long> deleteUserRequest(@RequestBody UserApplicationDeleteRequest userApplicationDeleteRequest) {
         return ResponseEntity.ok(userApplicationService.deleteRequest(userApplicationDeleteRequest.getUserId(), userApplicationDeleteRequest.getProjectId()));
+    }
+
+    @PostMapping("/project/application/approve")
+    public ResponseEntity<Long> approveUserRequest(@RequestBody UserApplicationApproveRequest request) {
+        Long response = userApplicationService.approveUserRequest(request.getUserId(), request.getProjectId());
+        userApplicationService.deleteRequest(request.getUserId(), request.getProjectId());
+        return ResponseEntity.ok(response);
     }
 }
