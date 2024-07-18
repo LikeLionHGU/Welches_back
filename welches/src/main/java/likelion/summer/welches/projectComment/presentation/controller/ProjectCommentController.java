@@ -7,10 +7,7 @@ import likelion.summer.welches.projectComment.application.service.ProjectComment
 import likelion.summer.welches.projectComment.presentation.request.ProjectCommentRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,5 +21,13 @@ public class ProjectCommentController {
         String userId = jwtProvider.getAccount(token);
 
         return ResponseEntity.ok(projectCommentService.addProjectComment(userId, id, projectCommentRequest.getContents()));
+    }
+
+    @DeleteMapping("/project/comment/delete/{id}")
+    public ResponseEntity<Void> deleteProjectComment(HttpServletRequest request, @PathVariable Long id) {
+        System.out.println("?!?!?!?!?!");
+        projectCommentService.deleteProjectComment(id);
+
+        return ResponseEntity.ok(null);
     }
 }
