@@ -2,6 +2,7 @@ package likelion.summer.welches.project.domain.entity;
 
 
 import jakarta.persistence.*;
+import likelion.summer.welches.communityPost.domain.entity.CommunityPost;
 import likelion.summer.welches.project.application.dto.ProjectAddDto;
 import likelion.summer.welches.projectComment.domain.entity.ProjectComment;
 import likelion.summer.welches.projectLike.domain.entity.ProjectLike;
@@ -43,6 +44,9 @@ public class Project {
 
     @LastModifiedDate
     private LocalDateTime updatedDate;
+
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+    private List<CommunityPost> communityPostList;
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private List<ProjectComment> projectCommentList;

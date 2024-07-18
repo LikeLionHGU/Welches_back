@@ -51,6 +51,8 @@ public class SecurityConfig {
                 .requestMatchers("/project/application/**").permitAll()
                 .requestMatchers("/project/user/**").permitAll()
 
+                .requestMatchers("/post/community/**").permitAll()
+
 
                 .requestMatchers("/login/oauth2/**").permitAll()
                 .requestMatchers("/api/v1/oauth2/google").permitAll()
