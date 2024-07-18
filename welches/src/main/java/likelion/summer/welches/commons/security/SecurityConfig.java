@@ -48,6 +48,7 @@ public class SecurityConfig {
                 .requestMatchers("/project/get/**").permitAll()
                 .requestMatchers("/project/comment/**").permitAll()
                 .requestMatchers("/project/like/**").permitAll()
+                .requestMatchers("/project/application/**").permitAll()
 
 
                 .requestMatchers("/login/oauth2/**").permitAll()
