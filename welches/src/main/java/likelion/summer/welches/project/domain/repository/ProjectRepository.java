@@ -12,4 +12,5 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
 //    List<Post> findPostListByType(@Param("type") int type);
 
     List<Project> findProjectsByIsFinished(Boolean isFinished);
+    List<Project> findProjectsByCategoryEquals(String category);
 }

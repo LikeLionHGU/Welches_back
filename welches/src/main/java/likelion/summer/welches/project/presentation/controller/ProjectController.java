@@ -52,4 +52,18 @@ public class ProjectController {
         return ResponseEntity.ok(projectService.getFinishedList(userId));
     }
 
+    @GetMapping("/project/get/{category}")
+    public ResponseEntity<List<ProjectResponse>> getProjectListWithCategory(@PathVariable String category, HttpServletRequest request) {
+        String token = jwtProvider.resolveToken(request);
+        String userId = jwtProvider.getAccount(token);
+
+        return ResponseEntity.ok(projectService.getProjectListWithCategory(userId, category));
+    }
+
+//    @GetMapping("/project/get/{id}")
+//    public ResponseEntity<ProjectResponse> getProject(@PathVariable Long id, HttpServletRequest request) {
+//        String token = jwtProvider.resolveToken(request);
+//        String userId = jwtProvider.getAccount(token);
+//    }
+
 }

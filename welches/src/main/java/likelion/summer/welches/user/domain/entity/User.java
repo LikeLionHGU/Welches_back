@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import likelion.summer.welches.commons.entity.BaseEntity;
 import likelion.summer.welches.commons.security.Authority;
 import likelion.summer.welches.project.domain.entity.Project;
+import likelion.summer.welches.projectComment.domain.entity.ProjectComment;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -24,6 +25,9 @@ public class User extends BaseEntity {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Project> projectList;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<ProjectComment> projectCommentList;
 
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)

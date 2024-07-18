@@ -54,4 +54,21 @@ public class ProjectService {
 
         return projectResponseList;
     }
+
+    @Transactional
+    public List<ProjectResponse> getProjectListWithCategory(String userId, String category) {
+        List<Project> projectList = projectRepository.findProjectsByCategoryEquals(category);
+        List<ProjectResponse> projectResponseList = projectList.stream().map(ProjectResponse::toResponse).toList();
+
+        for(ProjectResponse p : projectResponseList) {
+            p.setIsOwner(p.getOwnerId().equals(userId)); // 현재 접속자가 해당 프로젝트의 owner일 경우에는 true를 넣어서 return
+        }
+        return projectResponseList;
+    }
+
+//    @Transactional
+//    public ProjectResponse getProject(String userId, Long projectId) {
+//        Project project = projectRepository.findById(projectId).orElse(null);
+//        ProjectResponse projectResponse
+//    }
 }

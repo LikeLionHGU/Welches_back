@@ -3,8 +3,11 @@ package likelion.summer.welches.project.domain.entity;
 
 import jakarta.persistence.*;
 import likelion.summer.welches.project.application.dto.ProjectAddDto;
+import likelion.summer.welches.projectComment.domain.entity.ProjectComment;
 import likelion.summer.welches.user.domain.entity.User;
 import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Getter
@@ -27,6 +30,9 @@ public class Project {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
+
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+    private List<ProjectComment> projectCommentList;
 
     public static Project toAdd(ProjectAddDto dto, String imageAddress, User user) {
         return Project.builder()
