@@ -44,6 +44,7 @@ public class SecurityConfig {
                 .requestMatchers("/post/delete/**").permitAll() //.hasRole("MANAGER")
                 .requestMatchers("/post/update/**").permitAll() //.hasRole("MANAGER")
                 .requestMatchers("/post/get/**").permitAll() //.hasRole("MANAGER")
+                .requestMatchers("/project/add").permitAll()
 
                 .requestMatchers("/material/add").permitAll() //.hasRole("MANAGER")
                 .requestMatchers("/material/delete/**").permitAll() //.hasRole("MANAGER")

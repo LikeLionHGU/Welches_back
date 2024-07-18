@@ -3,6 +3,7 @@ package likelion.summer.welches.user.domain.entity;
 import jakarta.persistence.*;
 import likelion.summer.welches.commons.entity.BaseEntity;
 import likelion.summer.welches.commons.security.Authority;
+import likelion.summer.welches.project.domain.entity.Project;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -19,6 +20,11 @@ public class User extends BaseEntity {
     private String id;
     private String name;
     private String email;
+    private String information; // 자기소개 글
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Project> projectList;
+
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Builder.Default

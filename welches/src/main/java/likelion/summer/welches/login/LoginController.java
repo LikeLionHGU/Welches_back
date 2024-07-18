@@ -35,6 +35,7 @@ public class LoginController {
         String userId = URLEncoder.encode(userResponse.getUserId(), StandardCharsets.UTF_8.toString());
         String userName = URLEncoder.encode(userResponse.getName(), StandardCharsets.UTF_8.toString());
         String token = URLEncoder.encode(userResponse.getToken(), StandardCharsets.UTF_8.toString());
+        System.out.println(token);
 
 
         String redirectUrl = UriComponentsBuilder.fromUriString("https://raonz.netlify.app/dashboard/main")
