@@ -1,4 +1,4 @@
-package likelion.summer.welches.project.presentation.response;
+package likelion.summer.welches.project.presentation.request;
 
 import lombok.*;
 

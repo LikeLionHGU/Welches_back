@@ -1,6 +1,6 @@
 package likelion.summer.welches.project.application.dto;
 
-import likelion.summer.welches.project.presentation.response.ProjectAddRequest;
+import likelion.summer.welches.project.presentation.request.ProjectAddRequest;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

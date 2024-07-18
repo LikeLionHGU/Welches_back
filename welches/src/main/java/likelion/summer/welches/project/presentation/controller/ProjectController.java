@@ -5,14 +5,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import likelion.summer.welches.commons.jwt.JWTProvider;
 import likelion.summer.welches.project.application.dto.ProjectAddDto;
 import likelion.summer.welches.project.application.service.ProjectService;
-import likelion.summer.welches.project.presentation.response.ProjectAddRequest;
+import likelion.summer.welches.project.presentation.request.ProjectAddRequest;
+import likelion.summer.welches.project.presentation.response.ProjectResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -28,5 +28,13 @@ public class ProjectController {
         Long projectId = projectService.addProject(ProjectAddDto.toAdd(projectAddRequest, file, userId));
 
         return ResponseEntity.ok(projectId);
+    }
+
+    @GetMapping("/project/get/all")
+    public ResponseEntity<List<ProjectResponse>> getAllProjectList(HttpServletRequest request) {
+        String token = jwtProvider.resolveToken(request);
+        String userId = jwtProvider.getAccount(token);
+
+        return ResponseEntity.ok(projectService.getAllList(userId));
     }
 }
