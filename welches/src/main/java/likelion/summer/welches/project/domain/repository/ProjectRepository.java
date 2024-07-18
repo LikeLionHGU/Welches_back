@@ -8,6 +8,8 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface ProjectRepository extends JpaRepository<Project, Long> {
-//    @Query("select r from Project r where r.type = :type")
+//    @Query("select r from Project r where r. = :type")
 //    List<Post> findPostListByType(@Param("type") int type);
+
+    List<Project> findProjectsByIsFinished(Boolean isFinished);
 }

@@ -46,6 +46,7 @@ public class SecurityConfig {
                 .requestMatchers("/post/get/**").permitAll() //.hasRole("MANAGER")
                 .requestMatchers("/project/add").permitAll()
                 .requestMatchers("/project/get/all").permitAll()
+                .requestMatchers("/project/get/finished").permitAll()
 
                 .requestMatchers("/login/oauth2/**").permitAll()
                 .requestMatchers("/api/v1/oauth2/google").permitAll()

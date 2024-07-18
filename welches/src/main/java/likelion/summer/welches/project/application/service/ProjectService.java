@@ -42,4 +42,16 @@ public class ProjectService {
 
         return projectResponseList;
     }
+
+    @Transactional
+    public List<ProjectResponse> getFinishedList(String userId) {
+        List<Project> projectList = projectRepository.findProjectsByIsFinished(true);
+        List<ProjectResponse> projectResponseList = projectList.stream().map(ProjectResponse::toResponse).toList();
+
+        for(ProjectResponse p : projectResponseList) {
+            p.setIsOwner(p.getOwnerId().equals(userId)); // 현재 접속자가 해당 프로젝트의 owner일 경우에는 true를 넣어서 return
+        }
+
+        return projectResponseList;
+    }
 }

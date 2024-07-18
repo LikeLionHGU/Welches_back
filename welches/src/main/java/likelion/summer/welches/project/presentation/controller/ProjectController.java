@@ -37,4 +37,19 @@ public class ProjectController {
 
         return ResponseEntity.ok(projectService.getAllList(userId));
     }
+
+//    @GetMapping("/project/get/recurit")
+//    public ResponseEntity<List<ProjectResponse>> getRecruitProjectList(HttpServletRequest request) {
+//        String token = jwtProvider.resolveToken(request);
+//        String userId = jwtProvider.getAccount(token);
+//    }
+
+    @GetMapping("/project/get/finished")
+    public ResponseEntity<List<ProjectResponse>> getAllFinishedProjectList(HttpServletRequest request) {
+        String token = jwtProvider.resolveToken(request);
+        String userId = jwtProvider.getAccount(token);
+
+        return ResponseEntity.ok(projectService.getFinishedList(userId));
+    }
+
 }
