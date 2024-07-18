@@ -4,6 +4,7 @@ package likelion.summer.welches.project.domain.entity;
 import jakarta.persistence.*;
 import likelion.summer.welches.project.application.dto.ProjectAddDto;
 import likelion.summer.welches.projectComment.domain.entity.ProjectComment;
+import likelion.summer.welches.projectLike.domain.entity.ProjectLike;
 import likelion.summer.welches.user.domain.entity.User;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -44,6 +45,9 @@ public class Project {
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private List<ProjectComment> projectCommentList;
+
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+    private List<ProjectLike> projectLikeList;
 
     public static Project toAdd(ProjectAddDto dto, String imageAddress, User user) {
         return Project.builder()
