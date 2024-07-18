@@ -4,6 +4,9 @@
 # Log file
 *.log
 
+*.yml
+*.yaml
+
 # BlueJ files
 *.ctxt
 
