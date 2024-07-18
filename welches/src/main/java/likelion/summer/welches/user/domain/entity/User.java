@@ -18,6 +18,7 @@ public class User extends BaseEntity {
     @Id
     private String id;
     private String name;
+    private String email;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Builder.Default
