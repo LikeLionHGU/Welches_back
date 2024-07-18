@@ -5,6 +5,7 @@ import likelion.summer.welches.commons.entity.BaseEntity;
 import likelion.summer.welches.commons.security.Authority;
 import likelion.summer.welches.project.domain.entity.Project;
 import likelion.summer.welches.projectComment.domain.entity.ProjectComment;
+import likelion.summer.welches.projectCommentLike.domain.entity.ProjectCommentLike;
 import likelion.summer.welches.projectLike.domain.entity.ProjectLike;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -37,6 +38,9 @@ public class User extends BaseEntity {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<ProjectLike> projectLikeList;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<ProjectCommentLike> projectCommentLikeList;
 
     @CreatedDate
     private LocalDateTime createdDate;
