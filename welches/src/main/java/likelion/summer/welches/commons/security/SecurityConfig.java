@@ -54,6 +54,7 @@ public class SecurityConfig {
                 .requestMatchers("/post/community/**").permitAll()
 
                 .requestMatchers("/community/comment/**").permitAll()
+                .requestMatchers("/community/**").permitAll()
 
 
                 .requestMatchers("/login/oauth2/**").permitAll()

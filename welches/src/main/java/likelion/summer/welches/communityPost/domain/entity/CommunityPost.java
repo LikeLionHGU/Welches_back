@@ -3,6 +3,7 @@ package likelion.summer.welches.communityPost.domain.entity;
 import jakarta.persistence.*;
 import likelion.summer.welches.commons.entity.BaseEntity;
 import likelion.summer.welches.communityPostComment.domain.entity.CommunityPostComment;
+import likelion.summer.welches.communityPostLike.domain.entity.CommunityPostLike;
 import likelion.summer.welches.project.domain.entity.Project;
 import likelion.summer.welches.user.domain.entity.User;
 import lombok.*;
@@ -35,6 +36,10 @@ public class CommunityPost extends BaseEntity {
 
     @OneToMany(mappedBy = "communityPost", cascade = CascadeType.ALL)
     private List<CommunityPostComment> communityPostComment;
+
+    @OneToMany(mappedBy = "communityPost", cascade = CascadeType.ALL)
+    private List<CommunityPostLike> communityPostLikeList;
+
 
     @CreatedDate
     private LocalDateTime createdDate;
