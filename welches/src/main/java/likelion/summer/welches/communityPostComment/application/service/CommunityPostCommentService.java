@@ -19,4 +19,17 @@ public class CommunityPostCommentService {
     public Long addComment(String userId, Long postId, String contents) {
         return communityPostCommentRepository.save(CommunityPostComment.toAdd(userRepository.findUserByUserId(userId), communityPostRepository.findById(postId).orElse(null), contents)).getId();
     }
+
+    @Transactional
+    public Long deleteComment(String userId, Long postCommentId) {
+        CommunityPostComment communityPostComment = communityPostCommentRepository.findById(postCommentId).orElse(null);
+        if(communityPostComment != null) {
+            if(communityPostComment.getUser().getId().equals(userId)) {
+                communityPostCommentRepository.delete(communityPostComment);
+            }
+        }
+
+
+        return postCommentId;
+    }
 }

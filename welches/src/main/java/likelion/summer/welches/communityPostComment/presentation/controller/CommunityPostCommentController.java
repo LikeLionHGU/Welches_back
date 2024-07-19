@@ -6,9 +6,7 @@ import likelion.summer.welches.communityPostComment.application.service.Communit
 import likelion.summer.welches.communityPostComment.presentation.request.CommunityPostCommentAddRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,5 +20,13 @@ public class CommunityPostCommentController {
         String userId = jwtProvider.getAccount(token);
 
         return ResponseEntity.ok(communityPostCommentService.addComment(userId, commentAddRequest.getPostId(), commentAddRequest.getContents()));
+    }
+
+    @DeleteMapping("/community/comment/delete/{id}")
+    public ResponseEntity<Long> deleteComment(HttpServletRequest request, @PathVariable Long id) {
+        String token = jwtProvider.resolveToken(request);
+        String userId = jwtProvider.getAccount(token);
+
+        return ResponseEntity.ok(communityPostCommentService.deleteComment(userId, id));
     }
 }
