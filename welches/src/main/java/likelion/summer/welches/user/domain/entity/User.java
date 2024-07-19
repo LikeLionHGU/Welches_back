@@ -5,6 +5,7 @@ import likelion.summer.welches.commons.entity.BaseEntity;
 import likelion.summer.welches.commons.security.Authority;
 import likelion.summer.welches.communityPost.domain.entity.CommunityPost;
 import likelion.summer.welches.communityPostComment.domain.entity.CommunityPostComment;
+import likelion.summer.welches.communityPostCommentLike.domain.entity.CommunityPostCommentLike;
 import likelion.summer.welches.communityPostLike.domain.entity.CommunityPostLike;
 import likelion.summer.welches.project.domain.entity.Project;
 import likelion.summer.welches.projectComment.domain.entity.ProjectComment;
@@ -57,6 +58,10 @@ public class User extends BaseEntity {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<CommunityPostComment> communityPostCommentList;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<CommunityPostCommentLike> communityPostCommentLikeList;
+
 
     @CreatedDate
     private LocalDateTime createdDate;

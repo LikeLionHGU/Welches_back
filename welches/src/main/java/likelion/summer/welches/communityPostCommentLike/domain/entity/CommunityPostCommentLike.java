@@ -1,8 +1,8 @@
-package likelion.summer.welches.communityPostComment.domain.entity;
+package likelion.summer.welches.communityPostCommentLike.domain.entity;
 
 import jakarta.persistence.*;
-import likelion.summer.welches.communityPost.domain.entity.CommunityPost;
-import likelion.summer.welches.communityPostCommentLike.domain.entity.CommunityPostCommentLike;
+import likelion.summer.welches.commons.entity.BaseEntity;
+import likelion.summer.welches.communityPostComment.domain.entity.CommunityPostComment;
 import likelion.summer.welches.user.domain.entity.User;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -10,7 +10,6 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Getter
@@ -19,21 +18,18 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-public class CommunityPostComment {
-
+public class CommunityPostCommentLike extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String contents;
-
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
-    @ManyToOne(fetch = FetchType.LAZY)
-    private CommunityPost communityPost;
 
-    @OneToMany(mappedBy = "communityPostComment", cascade = CascadeType.ALL)
-    private List<CommunityPostCommentLike> communityPostCommentLikeList;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private CommunityPostComment communityPostComment;
+
+
 
     @CreatedDate
     private LocalDateTime createdDate;
@@ -41,11 +37,10 @@ public class CommunityPostComment {
     @LastModifiedDate
     private LocalDateTime updatedDate;
 
-    public static CommunityPostComment toAdd(User user, CommunityPost communityPost, String contents) {
-        return CommunityPostComment.builder()
+    public static CommunityPostCommentLike toAdd(User user, CommunityPostComment communityPostComment) {
+        return CommunityPostCommentLike.builder()
                 .user(user)
-                .communityPost(communityPost)
-                .contents(contents)
+                .communityPostComment(communityPostComment)
                 .build();
     }
 }
