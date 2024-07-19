@@ -20,4 +20,13 @@ public class SubscribeUserService {
 
         return subscribeUserRepository.save(SubscribeUser.toAdd(user, subscribeUserId)).getId();
     }
+
+    @Transactional
+    public Long deleteSubscribeUser(String userId, String subscribeUserId) {
+        SubscribeUser subscribeUser = subscribeUserRepository.findSubscribeUserByUserIdAndSubscribeUserId(userId, subscribeUserId);
+        Long response = subscribeUser.getId();
+        subscribeUserRepository.delete(subscribeUser);
+
+        return response;
+    }
 }
