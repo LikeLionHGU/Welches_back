@@ -1,8 +1,7 @@
-package likelion.summer.welches.projectLike.domain.entity;
+package likelion.summer.welches.subscribe.domain.entity;
 
 import jakarta.persistence.*;
 import likelion.summer.welches.commons.entity.BaseEntity;
-import likelion.summer.welches.project.domain.entity.Project;
 import likelion.summer.welches.user.domain.entity.User;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -16,18 +15,18 @@ import java.time.LocalDateTime;
 @Setter
 @Builder
 @AllArgsConstructor
-@RequiredArgsConstructor
+@NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-public class ProjectLike extends BaseEntity {
+public class SubscribeUser extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Project project;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     private User user;
+
+    private String subscribeUserId;
+
 
     @CreatedDate
     private LocalDateTime createdDate;
@@ -35,11 +34,10 @@ public class ProjectLike extends BaseEntity {
     @LastModifiedDate
     private LocalDateTime updatedDate;
 
-    public static ProjectLike toAdd(User user, Project project) {
-        return ProjectLike.builder()
+    public static SubscribeUser toAdd(User user, String subscribeUserId) {
+        return SubscribeUser.builder()
                 .user(user)
-                .project(project)
+                .subscribeUserId(subscribeUserId)
                 .build();
     }
-
 }
