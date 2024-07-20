@@ -1,0 +1,46 @@
+package likelion.summer.welches.bookMark.domain.entity;
+
+import jakarta.persistence.*;
+import likelion.summer.welches.commons.entity.BaseEntity;
+import likelion.summer.welches.project.domain.entity.Project;
+import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.time.LocalDateTime;
+
+@Entity
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
+public class BookMark extends BaseEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String name;
+
+    private Boolean isShared;
+
+    private Boolean isSameTime;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Project project;
+
+
+    @CreatedDate
+    private LocalDateTime createdDate;
+
+    @LastModifiedDate
+    private LocalDateTime updatedDate;
+
+    public static BookMark toAdd(Project project) {
+        return BookMark.builder()
+                .project(project)
+                .build();
+    }
+}

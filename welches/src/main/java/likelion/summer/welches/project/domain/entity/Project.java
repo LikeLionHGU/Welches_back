@@ -2,6 +2,7 @@ package likelion.summer.welches.project.domain.entity;
 
 
 import jakarta.persistence.*;
+import likelion.summer.welches.bookMark.domain.entity.BookMark;
 import likelion.summer.welches.communityPost.domain.entity.CommunityPost;
 import likelion.summer.welches.project.application.dto.ProjectAddDto;
 import likelion.summer.welches.projectComment.domain.entity.ProjectComment;
@@ -56,6 +57,9 @@ public class Project {
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private List<UserApplication> userApplicationList;
+
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+    private List<BookMark> bookMarkList;
 
     public static Project toAdd(ProjectAddDto dto, String imageAddress, User user) {
         return Project.builder()
