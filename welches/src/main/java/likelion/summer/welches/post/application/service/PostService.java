@@ -19,4 +19,21 @@ public class PostService {
     public Long addPost(String userId, String contents, Long bookMarkId) {
         return postRepository.save(Post.toAdd(userRepository.findUserByUserId(userId), bookMarkRepository.findById(bookMarkId).orElse(null), contents)).getId();
     }
+
+    @Transactional
+    public Long confirmPost(Long postId, Boolean isAllowed, String rejectedReason) {
+        Post post = postRepository.findById(postId).orElse(null);
+
+        if(post != null) {
+            post.setIsAllowed(isAllowed);
+            post.setIsConfirmed(true);
+            post.setRejectedReason(rejectedReason);
+            postRepository.save(post);
+
+            return post.getId();
+        } else {
+            return null;
+        }
+
+    }
 }
