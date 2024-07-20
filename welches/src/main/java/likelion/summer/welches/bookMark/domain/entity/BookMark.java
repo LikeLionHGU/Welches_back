@@ -2,6 +2,7 @@ package likelion.summer.welches.bookMark.domain.entity;
 
 import jakarta.persistence.*;
 import likelion.summer.welches.commons.entity.BaseEntity;
+import likelion.summer.welches.post.domain.entity.Post;
 import likelion.summer.welches.project.domain.entity.Project;
 import likelion.summer.welches.temporaryPost.domain.entity.TemporaryPost;
 import likelion.summer.welches.userBookMark.domain.entity.UserBookMark;
@@ -39,6 +40,9 @@ public class BookMark extends BaseEntity {
 
     @OneToMany(mappedBy = "bookMark", cascade = CascadeType.ALL)
     private List<TemporaryPost> temporaryPostList;
+
+    @OneToMany(mappedBy = "bookMark", cascade = CascadeType.ALL)
+    private List<Post> postList;
 
 
     @CreatedDate
