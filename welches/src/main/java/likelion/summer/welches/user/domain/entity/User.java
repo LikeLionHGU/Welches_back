@@ -13,6 +13,7 @@ import likelion.summer.welches.projectCommentLike.domain.entity.ProjectCommentLi
 import likelion.summer.welches.projectLike.domain.entity.ProjectLike;
 import likelion.summer.welches.subscribe.domain.entity.SubscribeUser;
 import likelion.summer.welches.userApplication.domain.entity.UserApplication;
+import likelion.summer.welches.userBookMark.domain.entity.UserBookMark;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -65,6 +66,9 @@ public class User extends BaseEntity {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<SubscribeUser> subscribeUserList;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<UserBookMark> userBookMarkList;
 
 
     @CreatedDate
