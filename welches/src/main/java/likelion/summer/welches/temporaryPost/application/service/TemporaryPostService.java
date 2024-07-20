@@ -1,6 +1,7 @@
 package likelion.summer.welches.temporaryPost.application.service;
 
 import likelion.summer.welches.bookMark.domain.repository.BookMarkRepository;
+import likelion.summer.welches.temporaryPost.application.dto.TemporaryPostDto;
 import likelion.summer.welches.temporaryPost.domain.entity.TemporaryPost;
 import likelion.summer.welches.temporaryPost.domain.repository.TemporaryPostRepository;
 import likelion.summer.welches.user.domain.repository.UserRepository;
@@ -26,6 +27,16 @@ public class TemporaryPostService {
 
         } else {
             return temporaryPostRepository.save(TemporaryPost.toAdd(userRepository.findUserByUserId(userId), bookMarkRepository.findById(bookMarkId).orElse(null), contents)).getId();
+        }
+    }
+
+    @Transactional
+    public TemporaryPostDto getTemporaryPost(String userId, Long bookMarkId) {
+        TemporaryPost temporaryPost = temporaryPostRepository.findTemporaryPostByUserIdAndBookMarkId(userId, bookMarkId);
+        if(temporaryPost != null) {
+            return TemporaryPostDto.toGet(temporaryPost);
+        } else {
+            return null;
         }
     }
 }
