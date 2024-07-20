@@ -2,6 +2,7 @@ package likelion.summer.welches.bookMark.application.service;
 
 import likelion.summer.welches.bookMark.domain.entity.BookMark;
 import likelion.summer.welches.bookMark.domain.repository.BookMarkRepository;
+import likelion.summer.welches.bookMark.presentation.response.BookMarkResponse;
 import likelion.summer.welches.project.domain.entity.Project;
 import likelion.summer.welches.project.domain.repository.ProjectRepository;
 import likelion.summer.welches.userBookMark.application.service.UserBookMarkService;
@@ -25,5 +26,16 @@ public class BookMarkService {
         userBookMarkService.addUserBookMark(userId, bookMark.getId());
 
         return bookMark.getId();
+    }
+
+    @Transactional
+    public BookMarkResponse getBookMark(Long id) {
+        BookMark bookMark = bookMarkRepository.findById(id).orElse(null);
+
+        if(bookMark != null) {
+            return BookMarkResponse.toResponse(bookMark);
+        }
+
+        return null;
     }
 }

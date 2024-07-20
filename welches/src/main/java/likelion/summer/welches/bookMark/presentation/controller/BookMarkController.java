@@ -2,9 +2,11 @@ package likelion.summer.welches.bookMark.presentation.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import likelion.summer.welches.bookMark.application.service.BookMarkService;
+import likelion.summer.welches.bookMark.presentation.response.BookMarkResponse;
 import likelion.summer.welches.commons.jwt.JWTProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,5 +23,10 @@ public class BookMarkController {
         String userId = jwtProvider.getAccount(token);
 
         return ResponseEntity.ok(bookMarkService.addBookMark(userId, id));
+    }
+
+    @GetMapping("/bookmark/get/{id}")
+    public ResponseEntity<BookMarkResponse> getBookMarkSetting(@PathVariable Long id) {
+        return ResponseEntity.ok(bookMarkService.getBookMark(id));
     }
 }

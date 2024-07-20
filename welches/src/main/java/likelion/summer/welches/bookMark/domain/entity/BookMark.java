@@ -54,6 +54,9 @@ public class BookMark extends BaseEntity {
     public static BookMark toAdd(Project project) {
         return BookMark.builder()
                 .project(project)
+                .isSameTime(false)
+                .isShared(false)
+                .name("갈피")
                 .build();
     }
 }
