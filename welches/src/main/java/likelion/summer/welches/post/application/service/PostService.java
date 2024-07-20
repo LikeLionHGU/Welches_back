@@ -3,6 +3,7 @@ package likelion.summer.welches.post.application.service;
 import likelion.summer.welches.bookMark.domain.repository.BookMarkRepository;
 import likelion.summer.welches.post.domain.entity.Post;
 import likelion.summer.welches.post.domain.repository.PostRepository;
+import likelion.summer.welches.post.presentation.response.PostGetResponse;
 import likelion.summer.welches.user.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -35,5 +36,16 @@ public class PostService {
             return null;
         }
 
+    }
+
+    @Transactional
+    public PostGetResponse getSelectedPost(Long postId) {
+        Post post = postRepository.findById(postId).orElse(null);
+
+        if(post != null) {
+            return PostGetResponse.toResponse(post);
+        } else {
+            return null;
+        }
     }
 }

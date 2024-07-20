@@ -5,12 +5,10 @@ import likelion.summer.welches.commons.jwt.JWTProvider;
 import likelion.summer.welches.post.application.service.PostService;
 import likelion.summer.welches.post.presentation.request.PostAddRequest;
 import likelion.summer.welches.post.presentation.request.PostConfirmRequest;
+import likelion.summer.welches.post.presentation.response.PostGetResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -29,5 +27,10 @@ public class PostController {
     @PatchMapping("/post/confirm")
     public ResponseEntity<Long> confirmPost(@RequestBody PostConfirmRequest request) {
         return ResponseEntity.ok(postService.confirmPost(request.getId(), request.getIsAllowed(), request.getRejectedReason()));
+    }
+
+    @GetMapping("/post/get/{id}") // id는 postId
+    public ResponseEntity<PostGetResponse> getSelectedPost(@PathVariable Long id) {
+        return ResponseEntity.ok(postService.getSelectedPost(id));
     }
 }
