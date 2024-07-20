@@ -4,6 +4,7 @@ import likelion.summer.welches.commons.config.ImageUploader;
 import likelion.summer.welches.project.application.dto.ProjectAddDto;
 import likelion.summer.welches.project.domain.entity.Project;
 import likelion.summer.welches.project.domain.repository.ProjectRepository;
+import likelion.summer.welches.project.presentation.response.ProjectGetResponse;
 import likelion.summer.welches.project.presentation.response.ProjectResponse;
 import likelion.summer.welches.user.domain.entity.User;
 import likelion.summer.welches.user.domain.repository.UserRepository;
@@ -64,6 +65,17 @@ public class ProjectService {
             p.setIsOwner(p.getOwnerId().equals(userId)); // 현재 접속자가 해당 프로젝트의 owner일 경우에는 true를 넣어서 return
         }
         return projectResponseList;
+    }
+
+    @Transactional
+    public ProjectGetResponse getProjectInformation(Long projectId) {
+        Project project = projectRepository.findById(projectId).orElse(null);
+
+        if(project == null) {
+            return null;
+        }
+
+        return ProjectGetResponse.toResponse(project);
     }
 
 //    @Transactional

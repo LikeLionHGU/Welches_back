@@ -6,6 +6,7 @@ import likelion.summer.welches.commons.jwt.JWTProvider;
 import likelion.summer.welches.project.application.dto.ProjectAddDto;
 import likelion.summer.welches.project.application.service.ProjectService;
 import likelion.summer.welches.project.presentation.request.ProjectAddRequest;
+import likelion.summer.welches.project.presentation.response.ProjectGetResponse;
 import likelion.summer.welches.project.presentation.response.ProjectResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -30,12 +31,17 @@ public class ProjectController {
         return ResponseEntity.ok(projectId);
     }
 
-    @GetMapping("/project/get/all")
+    @GetMapping("/project/get/all") // 모든 프로젝트 확인
     public ResponseEntity<List<ProjectResponse>> getAllProjectList(HttpServletRequest request) {
         String token = jwtProvider.resolveToken(request);
         String userId = jwtProvider.getAccount(token);
 
         return ResponseEntity.ok(projectService.getAllList(userId));
+    }
+
+    @GetMapping("/project/get/{id}")
+    public ResponseEntity<ProjectGetResponse> getOneProject(@PathVariable Long id) {
+        return ResponseEntity.ok(projectService.getProjectInformation(id));
     }
 
 //    @GetMapping("/project/get/recurit")
@@ -52,7 +58,7 @@ public class ProjectController {
         return ResponseEntity.ok(projectService.getFinishedList(userId));
     }
 
-    @GetMapping("/project/get/{category}")
+    @GetMapping("/project/get/category/{category}")
     public ResponseEntity<List<ProjectResponse>> getProjectListWithCategory(@PathVariable String category, HttpServletRequest request) {
         String token = jwtProvider.resolveToken(request);
         String userId = jwtProvider.getAccount(token);

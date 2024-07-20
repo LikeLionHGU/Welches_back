@@ -9,6 +9,7 @@ import likelion.summer.welches.projectComment.domain.entity.ProjectComment;
 import likelion.summer.welches.projectLike.domain.entity.ProjectLike;
 import likelion.summer.welches.user.domain.entity.User;
 import likelion.summer.welches.userApplication.domain.entity.UserApplication;
+import likelion.summer.welches.userProject.domain.entity.UserProject;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -36,6 +37,7 @@ public class Project {
     private Boolean isPublic;
     private Long maximumNumber;
     private Boolean isFinished;
+    private Boolean isOpen;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
@@ -59,6 +61,9 @@ public class Project {
     private List<UserApplication> userApplicationList;
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+    private List<UserProject> userProjectList;
+
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private List<BookMark> bookMarkList;
 
     public static Project toAdd(ProjectAddDto dto, String imageAddress, User user) {
@@ -71,6 +76,7 @@ public class Project {
                 .isFinished(dto.getIsFinished())
                 .imageAddress(imageAddress)
                 .user(user)
+                .isOpen(dto.getIsOpen())
                 .build();
     }
 }

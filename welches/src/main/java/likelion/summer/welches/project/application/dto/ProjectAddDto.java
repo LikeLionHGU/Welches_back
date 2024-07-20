@@ -20,6 +20,7 @@ public class ProjectAddDto {
     private Boolean isFinished;
     private MultipartFile file;
     private String userId;
+    private Boolean isOpen;
 
     public static ProjectAddDto toAdd(ProjectAddRequest request, MultipartFile file, String userId) {
         return ProjectAddDto.builder()
@@ -31,6 +32,7 @@ public class ProjectAddDto {
                 .maximumNumber(request.getMaximumNumber())
                 .file(file)
                 .userId(userId)
+                .isOpen(request.getIsOpen())
                 .build();
     }
 }
