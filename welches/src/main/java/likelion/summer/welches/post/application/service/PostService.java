@@ -4,6 +4,7 @@ import likelion.summer.welches.bookMark.domain.entity.BookMark;
 import likelion.summer.welches.bookMark.domain.repository.BookMarkRepository;
 import likelion.summer.welches.post.domain.entity.Post;
 import likelion.summer.welches.post.domain.repository.PostRepository;
+import likelion.summer.welches.post.presentation.response.PostBookMarkResponse;
 import likelion.summer.welches.post.presentation.response.PostGetAllResponse;
 import likelion.summer.welches.post.presentation.response.PostGetResponse;
 import likelion.summer.welches.user.domain.repository.UserRepository;
@@ -12,9 +13,11 @@ import likelion.summer.welches.userBookMark.domain.repository.UserBookMarkReposi
 import likelion.summer.welches.userProject.domain.entity.UserProject;
 import likelion.summer.welches.userProject.domain.repository.UserProjectRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -26,8 +29,8 @@ public class PostService {
     private final UserProjectRepository userProjectRepository;
 
     @Transactional
-    public Long addPost(String userId, String contents, Long bookMarkId) {
-        return postRepository.save(Post.toAdd(userRepository.findUserByUserId(userId), bookMarkRepository.findById(bookMarkId).orElse(null), contents)).getId();
+    public Long addPost(String userId, String contents, Long bookMarkId, Boolean isAllowed) {
+        return postRepository.save(Post.toAdd(userRepository.findUserByUserId(userId), bookMarkRepository.findById(bookMarkId).orElse(null), contents, isAllowed)).getId();
     }
 
     @Transactional
@@ -79,6 +82,25 @@ public class PostService {
             return null;
         }
 
+
+    }
+
+    @Transactional
+    public PostBookMarkResponse getCurrentPost(Long bookMarkId) {
+        BookMark bookMark = bookMarkRepository.findById(bookMarkId).orElse(null);
+
+        if(bookMark == null) {
+            return null;
+        }
+
+        List<Post> postList = bookMark.getPostList(); // 갈피의 현재 post 모두 가져오기
+
+        Post post = postList.stream().filter(Post::getIsAllowed).max(Comparator.comparing(Post::getUpdatedDate)).orElse(null);
+        if(post != null) {
+            return PostBookMarkResponse.toResponse(post);
+        } else {
+            return null;
+        }
 
     }
 }

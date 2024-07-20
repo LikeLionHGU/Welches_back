@@ -5,6 +5,7 @@ import likelion.summer.welches.commons.jwt.JWTProvider;
 import likelion.summer.welches.post.application.service.PostService;
 import likelion.summer.welches.post.presentation.request.PostAddRequest;
 import likelion.summer.welches.post.presentation.request.PostConfirmRequest;
+import likelion.summer.welches.post.presentation.response.PostBookMarkResponse;
 import likelion.summer.welches.post.presentation.response.PostGetAllResponse;
 import likelion.summer.welches.post.presentation.response.PostGetResponse;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +25,7 @@ public class PostController {
         String token = jwtProvider.resolveToken(request);
         String userId = jwtProvider.getAccount(token);
 
-        return ResponseEntity.ok(postService.addPost(userId, postAddRequest.getContents(), postAddRequest.getBookMarkId()));
+        return ResponseEntity.ok(postService.addPost(userId, postAddRequest.getContents(), postAddRequest.getBookMarkId(), postAddRequest.getIsAllowed()));
     }
 
     @PatchMapping("/post/confirm")
@@ -43,5 +44,10 @@ public class PostController {
         String userId = jwtProvider.getAccount(token);
 
         return ResponseEntity.ok(postService.getAllResponseList(userId, id));
+    }
+
+    @GetMapping("/post/get/bookmark/{id}") // 현재 갈피의 최신 버전 가져오기
+    public ResponseEntity<PostBookMarkResponse> getCurrentPost(@PathVariable Long id) {
+        return ResponseEntity.ok(postService.getCurrentPost(id));
     }
 }
