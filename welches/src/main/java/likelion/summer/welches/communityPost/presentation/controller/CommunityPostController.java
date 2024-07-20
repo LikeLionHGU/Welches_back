@@ -4,9 +4,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import likelion.summer.welches.commons.jwt.JWTProvider;
 import likelion.summer.welches.communityPost.application.service.CommunityPostService;
 import likelion.summer.welches.communityPost.presentation.request.CommunityPostAddRequest;
+import likelion.summer.welches.communityPost.presentation.response.CommunityPostResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -29,4 +32,9 @@ public class CommunityPostController {
 
         return ResponseEntity.ok(communityPostService.deleteCommunityPost(userId, id));
     }
+
+//    @GetMapping
+//    public ResponseEntity<List<CommunityPostResponse>> getAllCommunityPostList() {
+//
+//    }
 }

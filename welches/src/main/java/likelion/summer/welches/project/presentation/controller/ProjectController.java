@@ -66,6 +66,11 @@ public class ProjectController {
         return ResponseEntity.ok(projectService.getProjectListWithCategory(userId, category));
     }
 
+    @PatchMapping("/project/update/owner/{userId}/{projectId}")
+    public ResponseEntity<Long> updateProjectOwner(@PathVariable String userId, @PathVariable Long projectId) {
+        return ResponseEntity.ok(projectService.updateProjectOwner(userId, projectId));
+    }
+
 //    @GetMapping("/project/get/{id}")
 //    public ResponseEntity<ProjectResponse> getProject(@PathVariable Long id, HttpServletRequest request) {
 //        String token = jwtProvider.resolveToken(request);

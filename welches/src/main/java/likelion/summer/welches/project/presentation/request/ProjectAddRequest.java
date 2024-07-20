@@ -14,5 +14,5 @@ public class ProjectAddRequest {
     private Boolean isPublic;
     private Long maximumNumber;
     private Boolean isFinished;
-    private Boolean isOpen;
+    private Boolean isRecruit;
 }

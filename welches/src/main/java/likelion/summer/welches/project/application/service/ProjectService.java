@@ -78,6 +78,18 @@ public class ProjectService {
         return ProjectGetResponse.toResponse(project);
     }
 
+    @Transactional
+    public Long updateProjectOwner(String userId, Long projectId) {
+        User user = userRepository.findUserByUserId(userId);
+        Project project = projectRepository.findById(projectId).orElse(null);
+
+        assert project != null;
+        project.setUser(user);
+        projectRepository.save(project);
+
+        return project.getId();
+    }
+
 //    @Transactional
 //    public ProjectResponse getProject(String userId, Long projectId) {
 //        Project project = projectRepository.findById(projectId).orElse(null);

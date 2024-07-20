@@ -46,6 +46,7 @@ public class SecurityConfig {
                 .requestMatchers("/project/like/**").permitAll()
                 .requestMatchers("/project/application/**").permitAll()
                 .requestMatchers("/project/user/**").permitAll()
+                .requestMatchers("project/update/**").permitAll()
 
                 .requestMatchers("/post/**").permitAll()
                 .requestMatchers("/post/community/**").permitAll()

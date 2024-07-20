@@ -37,7 +37,7 @@ public class Project {
     private Boolean isPublic;
     private Long maximumNumber;
     private Boolean isFinished;
-    private Boolean isOpen;
+    private Boolean isRecruit;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
@@ -76,7 +76,7 @@ public class Project {
                 .isFinished(dto.getIsFinished())
                 .imageAddress(imageAddress)
                 .user(user)
-                .isOpen(dto.getIsOpen())
+                .isRecruit(dto.getIsRecruit())
                 .build();
     }
 }
