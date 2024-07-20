@@ -3,6 +3,7 @@ package likelion.summer.welches.bookMark.domain.entity;
 import jakarta.persistence.*;
 import likelion.summer.welches.commons.entity.BaseEntity;
 import likelion.summer.welches.project.domain.entity.Project;
+import likelion.summer.welches.temporaryPost.domain.entity.TemporaryPost;
 import likelion.summer.welches.userBookMark.domain.entity.UserBookMark;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -35,6 +36,9 @@ public class BookMark extends BaseEntity {
 
     @OneToMany(mappedBy = "bookMark", cascade = CascadeType.ALL)
     private List<UserBookMark> userBookMarkList;
+
+    @OneToMany(mappedBy = "bookMark", cascade = CascadeType.ALL)
+    private List<TemporaryPost> temporaryPostList;
 
 
     @CreatedDate

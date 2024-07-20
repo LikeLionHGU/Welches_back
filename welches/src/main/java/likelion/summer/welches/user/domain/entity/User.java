@@ -12,6 +12,7 @@ import likelion.summer.welches.projectComment.domain.entity.ProjectComment;
 import likelion.summer.welches.projectCommentLike.domain.entity.ProjectCommentLike;
 import likelion.summer.welches.projectLike.domain.entity.ProjectLike;
 import likelion.summer.welches.subscribe.domain.entity.SubscribeUser;
+import likelion.summer.welches.temporaryPost.domain.entity.TemporaryPost;
 import likelion.summer.welches.userApplication.domain.entity.UserApplication;
 import likelion.summer.welches.userBookMark.domain.entity.UserBookMark;
 import lombok.*;
@@ -69,6 +70,9 @@ public class User extends BaseEntity {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<UserBookMark> userBookMarkList;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<TemporaryPost> temporaryPostList;
 
 
     @CreatedDate
