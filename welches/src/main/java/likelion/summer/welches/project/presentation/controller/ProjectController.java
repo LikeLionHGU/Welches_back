@@ -17,6 +17,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class ProjectController {
     private final ProjectService projectService;
     private final JWTProvider jwtProvider;
@@ -77,4 +78,8 @@ public class ProjectController {
 //        String userId = jwtProvider.getAccount(token);
 //    }
 
+    @GetMapping("/project/get/best")
+    public ResponseEntity<List<ProjectResponse>> getBestProject() {
+        return ResponseEntity.ok(projectService.getBestProjectList());
+    }
 }

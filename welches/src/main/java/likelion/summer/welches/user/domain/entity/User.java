@@ -16,6 +16,7 @@ import likelion.summer.welches.subscribe.domain.entity.SubscribeUser;
 import likelion.summer.welches.temporaryPost.domain.entity.TemporaryPost;
 import likelion.summer.welches.userApplication.domain.entity.UserApplication;
 import likelion.summer.welches.userBookMark.domain.entity.UserBookMark;
+import likelion.summer.welches.userProject.domain.entity.UserProject;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -74,6 +75,9 @@ public class User extends BaseEntity {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<TemporaryPost> temporaryPostList;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<UserProject> userProjectList;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Post> postList;

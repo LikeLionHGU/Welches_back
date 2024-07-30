@@ -39,7 +39,7 @@ public class SecurityConfig {
                 // /admin으로 시작하는 요청은 ADMIN 권한이 있는 유저에게만 허용
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 // /user 로 시작하는 요청은 USER 권한이 있는 유저에게만 허용
-                .requestMatchers("/user/**").hasRole("USER")
+                .requestMatchers("/user/**").permitAll()
                 .requestMatchers("/project/add").permitAll()
                 .requestMatchers("/project/get/**").permitAll()
                 .requestMatchers("/project/comment/**").permitAll()
@@ -55,6 +55,7 @@ public class SecurityConfig {
                 .requestMatchers("/community/**").permitAll()
                 .requestMatchers("/subscribe/**").permitAll()
                 .requestMatchers("/bookmark/**").permitAll()
+
 
 
 
@@ -91,9 +92,15 @@ public class SecurityConfig {
         CorsConfiguration config = new CorsConfiguration();
 
 
-        config.setAllowedOrigins(List.of("https://raonz.netlify.app"));
+        config.setAllowedOrigins(List.of("http://localhost:3000"));
         config.setAllowedMethods(Arrays.asList("POST", "GET", "PUT", "DELETE", "PATCH"));
-        config.setAllowedHeaders(Arrays.asList(HttpHeaders.AUTHORIZATION, HttpHeaders.CONTENT_TYPE));
+        config.setAllowedHeaders(Arrays.asList(
+                HttpHeaders.AUTHORIZATION,
+                HttpHeaders.CONTENT_TYPE,
+                "Access-Control-Allow-Headers",
+                "X-Requested-With",
+                "observe"
+        ));
         config.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

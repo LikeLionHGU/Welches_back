@@ -21,6 +21,8 @@ public class ProjectResponse {
     private Boolean isFinished;
     private Boolean isOwner;
     private String ownerId;
+    private Long likeCount;
+    private Boolean isRecruit;
 
     public static ProjectResponse toResponse(Project project) {
         return ProjectResponse.builder()
@@ -33,6 +35,8 @@ public class ProjectResponse {
                 .maximumNumber(project.getMaximumNumber())
                 .isFinished(project.getIsFinished())
                 .ownerId(project.getUser().getId())
+                .likeCount(Long.valueOf(project.getProjectLikeList().size()))
+                .isRecruit(project.getIsRecruit())
                 .build();
     }
 }

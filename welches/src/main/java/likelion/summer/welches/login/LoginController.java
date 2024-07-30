@@ -38,7 +38,7 @@ public class LoginController {
         System.out.println(token);
 
 
-        String redirectUrl = UriComponentsBuilder.fromUriString("https://raonz.netlify.app/dashboard/main")
+        String redirectUrl = UriComponentsBuilder.fromUriString("http://localhost:3000")
                 .queryParam("userId", userId)
                 .queryParam("userName", userName)
                 .queryParam("token", token)

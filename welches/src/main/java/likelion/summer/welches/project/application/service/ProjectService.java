@@ -8,6 +8,8 @@ import likelion.summer.welches.project.presentation.response.ProjectGetResponse;
 import likelion.summer.welches.project.presentation.response.ProjectResponse;
 import likelion.summer.welches.user.domain.entity.User;
 import likelion.summer.welches.user.domain.repository.UserRepository;
+import likelion.summer.welches.userProject.application.service.UserProjectService;
+import likelion.summer.welches.userProject.domain.entity.UserProject;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,7 @@ public class ProjectService {
     private final ProjectRepository projectRepository;
     private final ImageUploader imageUploader;
     private final UserRepository userRepository;
+    private final UserProjectService userProjectService;
 
     @Transactional
     public Long addProject(ProjectAddDto dto) {
@@ -29,6 +32,8 @@ public class ProjectService {
         User user = userRepository.findUserByUserId(dto.getUserId());
 
         Project project = projectRepository.save(Project.toAdd(dto, imageUrl, user));
+        userProjectService.addProjectUser(dto.getUserId(), project.getId());
+
         return project.getId();
     }
 
@@ -88,6 +93,14 @@ public class ProjectService {
         projectRepository.save(project);
 
         return project.getId();
+    }
+
+    @Transactional
+    public List<ProjectResponse> getBestProjectList() {
+        List<Project> projectList = projectRepository.findAll();
+
+        projectList.sort((p1, p2) -> p2.getProjectLikeList().size() - p1.getProjectLikeList().size());
+        return projectList.stream().map(ProjectResponse::toResponse).limit(5).toList();
     }
 
 //    @Transactional
