@@ -8,4 +8,6 @@ import lombok.Setter;
 public class CommunityPostAddRequest {
     Long projectId;
     String contents;
+
+    String title;
 }

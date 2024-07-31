@@ -22,7 +22,7 @@ public class CommunityPostController {
         String token = jwtProvider.resolveToken(request);
         String userId = jwtProvider.getAccount(token);
 
-        return ResponseEntity.ok(communityPostService.addCommunityPost(userId, communityPostAddRequest.getProjectId(), communityPostAddRequest.getContents()));
+        return ResponseEntity.ok(communityPostService.addCommunityPost(userId, communityPostAddRequest.getProjectId(), communityPostAddRequest.getContents(), communityPostAddRequest.getTitle()));
     }
 
     @DeleteMapping("/post/community/delete/{id}")
@@ -33,8 +33,11 @@ public class CommunityPostController {
         return ResponseEntity.ok(communityPostService.deleteCommunityPost(userId, id));
     }
 
-//    @GetMapping
-//    public ResponseEntity<List<CommunityPostResponse>> getAllCommunityPostList() {
-//
-//    }
+    @GetMapping("/post/community/get/{id}")
+    public ResponseEntity<List<CommunityPostResponse>> getAllCommunityPostList(HttpServletRequest request, @PathVariable Long id) {
+        String token = jwtProvider.resolveToken(request);
+        String userId = jwtProvider.getAccount(token);
+
+        return ResponseEntity.ok(communityPostService.getCommunityPost(userId, id));
+    }
 }

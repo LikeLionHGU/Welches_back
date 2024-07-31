@@ -26,6 +26,8 @@ public class CommunityPost extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String title;
+
     private String contents;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -47,7 +49,7 @@ public class CommunityPost extends BaseEntity {
     @LastModifiedDate
     private LocalDateTime updatedDate;
 
-    public static CommunityPost toAdd(User user, Project project, String contents) {
+    public static CommunityPost toAdd(User user, Project project, String contents, String title) {
         return CommunityPost.builder()
                 .user(user)
                 .project(project)

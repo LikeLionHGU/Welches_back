@@ -2,6 +2,7 @@ package likelion.summer.welches.communityPost.application.service;
 
 import likelion.summer.welches.communityPost.domain.entity.CommunityPost;
 import likelion.summer.welches.communityPost.domain.repository.CommunityPostRepository;
+import likelion.summer.welches.communityPost.presentation.response.CommunityPostResponse;
 import likelion.summer.welches.communityPostComment.application.service.CommunityPostCommentService;
 import likelion.summer.welches.communityPostComment.domain.entity.CommunityPostComment;
 import likelion.summer.welches.communityPostLike.domain.entity.CommunityPostLike;
@@ -24,8 +25,8 @@ public class CommunityPostService {
     private final CommunityPostLikeRepository communityPostLikeRepository;
 
     @Transactional
-    public Long addCommunityPost(String userId, Long projectId, String contents) {
-        return communityPostRepository.save(CommunityPost.toAdd(userRepository.findUserByUserId(userId), projectRepository.findById(projectId).orElse(null), contents)).getId();
+    public Long addCommunityPost(String userId, Long projectId, String contents, String title) {
+        return communityPostRepository.save(CommunityPost.toAdd(userRepository.findUserByUserId(userId), projectRepository.findById(projectId).orElse(null), contents, title)).getId();
     }
 
     @Transactional
@@ -44,5 +45,11 @@ public class CommunityPostService {
         }
 
         return postId;
+    }
+
+    @Transactional
+    public List<CommunityPostResponse> getCommunityPost(String userId, Long projectId) {
+        List<CommunityPost> postList = communityPostRepository.findCommunityPostByProjectId(projectId);
+        return postList.stream().map((CommunityPost communityPost) -> CommunityPostResponse.toResponse(communityPost, userId)).toList();
     }
 }
