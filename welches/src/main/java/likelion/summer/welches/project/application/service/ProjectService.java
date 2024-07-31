@@ -73,14 +73,14 @@ public class ProjectService {
     }
 
     @Transactional
-    public ProjectGetResponse getProjectInformation(Long projectId) {
+    public ProjectGetResponse getProjectInformation(Long projectId, String userId) {
         Project project = projectRepository.findById(projectId).orElse(null);
 
         if(project == null) {
             return null;
         }
 
-        return ProjectGetResponse.toResponse(project);
+        return ProjectGetResponse.toResponse(project, userId);
     }
 
     @Transactional

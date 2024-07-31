@@ -41,8 +41,11 @@ public class ProjectController {
     }
 
     @GetMapping("/project/get/{id}")
-    public ResponseEntity<ProjectGetResponse> getOneProject(@PathVariable Long id) {
-        return ResponseEntity.ok(projectService.getProjectInformation(id));
+    public ResponseEntity<ProjectGetResponse> getOneProject(@PathVariable Long id, HttpServletRequest request) {
+        String token = jwtProvider.resolveToken(request);
+        String userId = jwtProvider.getAccount(token);
+
+        return ResponseEntity.ok(projectService.getProjectInformation(id, userId));
     }
 
 //    @GetMapping("/project/get/recurit")
