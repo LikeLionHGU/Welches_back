@@ -34,8 +34,14 @@ public class ProjectController {
 
     @GetMapping("/project/get/all") // 모든 프로젝트 확인
     public ResponseEntity<List<ProjectResponse>> getAllProjectList(HttpServletRequest request) {
+
         String token = jwtProvider.resolveToken(request);
-        String userId = jwtProvider.getAccount(token);
+        System.out.println(token);
+        String userId = null;
+        if(!token.equals("Bearer null")) {
+            userId = jwtProvider.getAccount(token);
+        }
+
 
         return ResponseEntity.ok(projectService.getAllList(userId));
     }

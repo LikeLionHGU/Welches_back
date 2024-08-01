@@ -25,7 +25,7 @@ public class ProjectCommentController {
 
     @DeleteMapping("/project/comment/delete/{id}")
     public ResponseEntity<Void> deleteProjectComment(HttpServletRequest request, @PathVariable Long id) {
-        System.out.println("?!?!?!?!?!");
+
         projectCommentService.deleteProjectComment(id);
 
         return ResponseEntity.ok(null);

@@ -10,7 +10,8 @@ import lombok.*;
 public class ProjectAddRequest {
     private String category;
     private String name;
-    private String information;
+    private String information; // 책 정보
+    private String description; // 책 한줄 소개
     private Boolean isPublic;
     private Long maximumNumber;
     private Boolean isFinished;

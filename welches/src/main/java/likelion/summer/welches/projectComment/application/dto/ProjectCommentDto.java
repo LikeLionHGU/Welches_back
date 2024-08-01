@@ -3,6 +3,7 @@ package likelion.summer.welches.projectComment.application.dto;
 
 import likelion.summer.welches.projectComment.domain.entity.ProjectComment;
 import likelion.summer.welches.projectCommentLike.domain.entity.ProjectCommentLike;
+import likelion.summer.welches.user.application.dto.UserCommentDto;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -18,6 +19,7 @@ public class ProjectCommentDto {
     private String contents;
     private LocalDateTime createdDate;
     private Long commentLikeCount;
+    private UserCommentDto user;
     private Boolean isLiked; // 현재 사용자가 좋아요를 눌렀는지 여부
 
     public static ProjectCommentDto toResponse(ProjectComment projectComment, String userId) {
@@ -32,6 +34,7 @@ public class ProjectCommentDto {
         }
         return ProjectCommentDto.builder()
                 .id(projectComment.getId())
+                .user(UserCommentDto.toResponse(projectComment.getUser()))
                 .contents(projectComment.getContents())
                 .createdDate(projectComment.getCreatedDate())
                 .commentLikeCount(Long.valueOf(projectComment.getProjectCommentLikeList().size()))

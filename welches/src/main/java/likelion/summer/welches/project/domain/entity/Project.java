@@ -34,6 +34,7 @@ public class Project {
     private String category;
     private String name;
     private String information;
+    private String description;
     private Boolean isPublic;
     private Long maximumNumber;
     private Boolean isFinished;
@@ -69,6 +70,7 @@ public class Project {
     public static Project toAdd(ProjectAddDto dto, String imageAddress, User user) {
         return Project.builder()
                 .category(dto.getCategory())
+                .description(dto.getDescription())
                 .name(dto.getName())
                 .information(dto.getInformation())
                 .isPublic(dto.getIsPublic())

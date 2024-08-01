@@ -41,10 +41,16 @@ public class ProjectService {
     public List<ProjectResponse> getAllList(String userId) {
         List<Project> projectList = projectRepository.findAll();
         List<ProjectResponse> projectResponseList = projectList.stream().map(ProjectResponse::toResponse).toList();
-
-        for(ProjectResponse p : projectResponseList) {
-            p.setIsOwner(p.getOwnerId().equals(userId)); // 현재 접속자가 해당 프로젝트의 owner일 경우에는 true를 넣어서 return
+        if(userId != null) {
+            for(ProjectResponse p : projectResponseList) {
+                p.setIsOwner(p.getOwnerId().equals(userId)); // 현재 접속자가 해당 프로젝트의 owner일 경우에는 true를 넣어서 return
+            }
+        } else {
+            for(ProjectResponse p : projectResponseList) {
+                p.setIsOwner(false); // 현재 접속자가 해당 프로젝트의 owner일 경우에는 true를 넣어서 return
+            }
         }
+
 
         return projectResponseList;
     }
@@ -100,7 +106,7 @@ public class ProjectService {
         List<Project> projectList = projectRepository.findAll();
 
         projectList.sort((p1, p2) -> p2.getProjectLikeList().size() - p1.getProjectLikeList().size());
-        return projectList.stream().map(ProjectResponse::toResponse).limit(5).toList();
+        return projectList.stream().map(ProjectResponse::toResponse).limit(10).toList();
     }
 
 //    @Transactional

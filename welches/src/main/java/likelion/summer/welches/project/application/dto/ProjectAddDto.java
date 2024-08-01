@@ -15,6 +15,7 @@ public class ProjectAddDto {
     private String category;
     private String name;
     private String information;
+    private String description;
     private Boolean isPublic;
     private Long maximumNumber;
     private Boolean isFinished;
@@ -26,6 +27,7 @@ public class ProjectAddDto {
         return ProjectAddDto.builder()
                 .category(request.getCategory())
                 .name(request.getName())
+                .description(request.getDescription())
                 .information(request.getInformation())
                 .isFinished(request.getIsFinished())
                 .isPublic(request.getIsPublic())
