@@ -30,6 +30,8 @@ public class CommunityPost extends BaseEntity {
 
     private String contents;
 
+    private String imageUrl;
+
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
@@ -49,11 +51,13 @@ public class CommunityPost extends BaseEntity {
     @LastModifiedDate
     private LocalDateTime updatedDate;
 
-    public static CommunityPost toAdd(User user, Project project, String contents, String title) {
+    public static CommunityPost toAdd(User user, Project project, String contents, String title, String imageUrl) {
         return CommunityPost.builder()
                 .user(user)
+                .title(title)
                 .project(project)
                 .contents(contents)
+                .imageUrl(imageUrl)
                 .build();
     }
 }

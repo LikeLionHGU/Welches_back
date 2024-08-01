@@ -8,6 +8,7 @@ import likelion.summer.welches.communityPost.presentation.response.CommunityPost
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -17,12 +18,12 @@ public class CommunityPostController {
     private final CommunityPostService communityPostService;
     private final JWTProvider jwtProvider;
 
-    @PostMapping("/post/community/upload")
-    public ResponseEntity<Long> addCommunityPost(HttpServletRequest request, @RequestBody CommunityPostAddRequest communityPostAddRequest) {
+    @PostMapping(value = "/post/community/upload", consumes = "multipart/form-data")
+    public ResponseEntity<Long> addCommunityPost(HttpServletRequest request, @RequestPart("post") CommunityPostAddRequest communityPostAddRequest, @RequestPart("file") MultipartFile file) {
         String token = jwtProvider.resolveToken(request);
         String userId = jwtProvider.getAccount(token);
 
-        return ResponseEntity.ok(communityPostService.addCommunityPost(userId, communityPostAddRequest.getProjectId(), communityPostAddRequest.getContents(), communityPostAddRequest.getTitle()));
+        return ResponseEntity.ok(communityPostService.addCommunityPost(userId, communityPostAddRequest.getProjectId(), communityPostAddRequest.getContents(), communityPostAddRequest.getTitle(), file));
     }
 
     @DeleteMapping("/post/community/delete/{id}")
