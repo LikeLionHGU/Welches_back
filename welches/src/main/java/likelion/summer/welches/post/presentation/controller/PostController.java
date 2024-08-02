@@ -46,6 +46,40 @@ public class PostController {
         return ResponseEntity.ok(postService.getAllResponseList(userId, id));
     }
 
+    @GetMapping("/post/get/wait/{id}") // 검토 대기 post
+    public ResponseEntity<List<PostGetAllResponse>> getAllWaitPost(@PathVariable Long id) { // 갈피 아이디
+        return ResponseEntity.ok(postService.getAllWaitPosts(id));
+    }
+
+    @GetMapping("/post/get/approve/{id}") // 승인된 post
+    public ResponseEntity<List<PostGetAllResponse>> getAllApprovePost(@PathVariable Long id) { // 갈피 아이디
+        return ResponseEntity.ok(postService.getAllApprovedPosts(id));
+    }
+
+    @GetMapping("/post/get/disapprove/{id}") // 미승인 post
+    public ResponseEntity<List<PostGetAllResponse>> getAllDisapprovePost(@PathVariable Long id) { // 갈피 아이디
+        return ResponseEntity.ok(postService.getAllDisapprovedPosts(id));
+    }
+
+    @GetMapping("/post/get/confirmed/all/{id}") // 검토 된 post
+    public ResponseEntity<List<PostGetAllResponse>> getAllConfirmedPost(@PathVariable Long id) { // 갈피 아이디
+        return ResponseEntity.ok(postService.getAllConfirmedPosts(id));
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     @GetMapping("/post/get/bookmark/{id}") // 현재 갈피의 최신 버전 가져오기
     public ResponseEntity<PostBookMarkResponse> getCurrentPost(@PathVariable Long id) {
         return ResponseEntity.ok(postService.getCurrentPost(id));

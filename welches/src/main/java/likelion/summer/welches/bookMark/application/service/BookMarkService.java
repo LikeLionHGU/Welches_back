@@ -2,6 +2,7 @@ package likelion.summer.welches.bookMark.application.service;
 
 import likelion.summer.welches.bookMark.domain.entity.BookMark;
 import likelion.summer.welches.bookMark.domain.repository.BookMarkRepository;
+import likelion.summer.welches.bookMark.presentation.request.BookMarkAddRequest;
 import likelion.summer.welches.bookMark.presentation.request.BookMarkUpdateRequest;
 import likelion.summer.welches.bookMark.presentation.response.BookMarkResponse;
 import likelion.summer.welches.project.domain.entity.Project;
@@ -19,11 +20,11 @@ public class BookMarkService {
     private final UserBookMarkService userBookMarkService;
 
     @Transactional
-    public Long addBookMark(String userId, Long projectId) {
+    public Long addBookMark(String userId, BookMarkAddRequest request) {
         // 처음 갈피를 만드는 부분
         // 여기서 자동으로 사용자-갈피 entity 하나를 추가 해줘야함(이후 작업해야하는 부분)
-        Project project = projectRepository.findById(projectId).orElse(null);
-        BookMark bookMark = bookMarkRepository.save(BookMark.toAdd(project));
+        Project project = projectRepository.findById(request.getProjectId()).orElse(null);
+        BookMark bookMark = bookMarkRepository.save(BookMark.toAdd(project, request));
         userBookMarkService.addUserBookMark(userId, bookMark.getId());
 
         return bookMark.getId();

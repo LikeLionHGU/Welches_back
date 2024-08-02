@@ -81,8 +81,34 @@ public class PostService {
         } else {
             return null;
         }
+    }
 
+    @Transactional
+    public List<PostGetAllResponse> getAllWaitPosts(Long bookmarkId) {
+        // confirmed가 false인 모든 객체
+        List<Post> postList = postRepository.findAllByIsConfirmedAndBookMarkId(false, bookmarkId);
+        return postList.stream().map(PostGetAllResponse::toResponse).toList();
+    }
 
+    @Transactional
+    public List<PostGetAllResponse> getAllApprovedPosts(Long bookmarkId) {
+        // confirmed는 true / approved는 true
+        List<Post> postList = postRepository.findAllByIsConfirmedAndApprovedAndBookMarkId(true, true, bookmarkId);
+        return postList.stream().map(PostGetAllResponse::toResponse).toList();
+    }
+
+    @Transactional
+    public List<PostGetAllResponse> getAllDisapprovedPosts(Long bookmarkId) {
+        // confirmed는 true / approved는 false
+        List<Post> postList = postRepository.findAllByIsConfirmedAndApprovedAndBookMarkId(true, false, bookmarkId);
+        return postList.stream().map(PostGetAllResponse::toResponse).toList();
+    }
+
+    @Transactional
+    public List<PostGetAllResponse> getAllConfirmedPosts(Long bookmarkId) {
+        // confirmed가 true인 모든 객체
+        List<Post> postList = postRepository.findAllByIsConfirmedAndBookMarkId(true, bookmarkId);
+        return postList.stream().map(PostGetAllResponse::toResponse).toList();
     }
 
     @Transactional

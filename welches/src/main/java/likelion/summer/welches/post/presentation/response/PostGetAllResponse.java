@@ -15,10 +15,13 @@ public class PostGetAllResponse {
     private UserPostDto user;
     private LocalDateTime updatedDate;
     private Long id;
+    private Boolean isApproved;
 
     public static PostGetAllResponse toResponse(Post post) {
+
         return PostGetAllResponse.builder()
                 .user(UserPostDto.toResponsePost(post.getUser()))
+                .isApproved(post.getIsAllowed())
                 .updatedDate(post.getUpdatedDate())
                 .id(post.getId())
                 .build();

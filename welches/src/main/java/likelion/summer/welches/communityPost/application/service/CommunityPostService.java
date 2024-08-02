@@ -29,7 +29,12 @@ public class CommunityPostService {
 
     @Transactional
     public Long addCommunityPost(String userId, Long projectId, String contents, String title, MultipartFile file) {
-        String imageUrl = imageUploader.toUpload(file);
+        System.out.println(file);
+        String imageUrl = null;
+        if(file != null) {
+            imageUrl = imageUploader.toUpload(file);
+        }
+
         return communityPostRepository.save(CommunityPost.toAdd(userRepository.findUserByUserId(userId), projectRepository.findById(projectId).orElse(null), contents, title, imageUrl)).getId();
     }
 

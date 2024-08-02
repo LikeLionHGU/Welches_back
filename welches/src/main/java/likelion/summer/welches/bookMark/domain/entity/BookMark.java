@@ -1,6 +1,7 @@
 package likelion.summer.welches.bookMark.domain.entity;
 
 import jakarta.persistence.*;
+import likelion.summer.welches.bookMark.presentation.request.BookMarkAddRequest;
 import likelion.summer.welches.commons.entity.BaseEntity;
 import likelion.summer.welches.post.domain.entity.Post;
 import likelion.summer.welches.project.domain.entity.Project;
@@ -51,12 +52,12 @@ public class BookMark extends BaseEntity {
     @LastModifiedDate
     private LocalDateTime updatedDate;
 
-    public static BookMark toAdd(Project project) {
+    public static BookMark toAdd(Project project, BookMarkAddRequest request) {
         return BookMark.builder()
                 .project(project)
-                .isSameTime(false)
-                .isShared(false)
-                .name("갈피")
+                .isSameTime(request.getIsSameTime())
+                .isShared(request.getIsShared())
+                .name(request.getName())
                 .build();
     }
 }

@@ -7,6 +7,7 @@ import likelion.summer.welches.projectComment.domain.entity.ProjectComment;
 import likelion.summer.welches.projectCommentLike.domain.entity.ProjectCommentLike;
 import likelion.summer.welches.projectLike.domain.entity.ProjectLike;
 import likelion.summer.welches.user.application.dto.UserInformationDto;
+import likelion.summer.welches.userProject.domain.entity.UserProject;
 import lombok.*;
 
 import java.util.List;
@@ -22,12 +23,15 @@ public class ProjectGetResponse {
     private String category;
     private String name;
     private String information;
+    private String description;
     private Boolean isPublic;
     private Long maximumNumber;
     private Boolean isFinished;
     private String ownerId;
     private Boolean isLiked;
     private Long likeCount;
+    private Boolean isOwner;
+    private Boolean isParticipate;
     private List<UserInformationDto> userProjectList;
     private List<BookMarkDto> bookMarkList;
     private List<ProjectCommentDto> commentList;
@@ -44,10 +48,33 @@ public class ProjectGetResponse {
             }
         }
 
+        Boolean isOwner = Boolean.FALSE;
+        Boolean isParticipate = Boolean.FALSE;
+
+        if(project.getUser().getId().equals(userId)) {
+            isOwner = Boolean.TRUE;
+            isParticipate = Boolean.TRUE;
+        }
+
+        List<UserProject> userProjectList = project.getUserProjectList();
+        for(UserProject p : userProjectList) {
+            if(p.getUser().getId().equals(userId)) {
+                isParticipate = Boolean.TRUE;
+            }
+        }
+
+
+
+
+
+
         return ProjectGetResponse.builder()
                 .id(project.getId())
+                .description(project.getDescription())
                 .likeCount(Long.valueOf(project.getProjectLikeList().size()))
                 .isLiked(temp)
+                .isOwner(isOwner)
+                .isParticipate(isParticipate)
                 .imageAddress(project.getImageAddress())
                 .category(project.getCategory())
                 .name(project.getName())

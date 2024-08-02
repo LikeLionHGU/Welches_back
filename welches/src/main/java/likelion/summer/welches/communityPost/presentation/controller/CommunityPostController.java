@@ -19,7 +19,7 @@ public class CommunityPostController {
     private final JWTProvider jwtProvider;
 
     @PostMapping(value = "/post/community/upload", consumes = "multipart/form-data")
-    public ResponseEntity<Long> addCommunityPost(HttpServletRequest request, @RequestPart("post") CommunityPostAddRequest communityPostAddRequest, @RequestPart("file") MultipartFile file) {
+    public ResponseEntity<Long> addCommunityPost(HttpServletRequest request, @RequestPart("post") CommunityPostAddRequest communityPostAddRequest, @RequestPart(value = "file", required = false) MultipartFile file) {
         String token = jwtProvider.resolveToken(request);
         String userId = jwtProvider.getAccount(token);
 
