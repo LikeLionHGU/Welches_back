@@ -39,6 +39,7 @@ public class Project {
     private Long maximumNumber;
     private Boolean isFinished;
     private Boolean isRecruit;
+    private String bigCategory;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
@@ -70,6 +71,7 @@ public class Project {
     public static Project toAdd(ProjectAddDto dto, String imageAddress, User user) {
         return Project.builder()
                 .category(dto.getCategory())
+                .bigCategory(dto.getBigCategory())
                 .description(dto.getDescription())
                 .name(dto.getName())
                 .information(dto.getInformation())

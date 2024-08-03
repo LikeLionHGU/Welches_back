@@ -9,8 +9,13 @@ import java.util.List;
 
 public interface ProjectRepository extends JpaRepository<Project, Long> {
 //    @Query("select r from Project r where r. = :type")
-//    List<Post> findPostListByType(@Param("type") int type);
+//    List<Project> findProjectsByCategoryAndIsFinishedAnd(@Param("type") int type);
 
     List<Project> findProjectsByIsFinished(Boolean isFinished);
-    List<Project> findProjectsByCategoryEquals(String category);
+
+    List<Project> findProjectsByBigCategoryEqualsAndIsFinished(String bigCategory, Boolean isFinished);
+    List<Project> findProjectsByBigCategoryEqualsAndIsRecruit(String bigCategory, Boolean isRecruit);
+    List<Project> findProjectsByCategoryEqualsAndIsFinished(String category, Boolean isFinished);
+    List<Project> findProjectsByCategoryEqualsAndIsRecruit(String category, Boolean isRecruit);
+
 }

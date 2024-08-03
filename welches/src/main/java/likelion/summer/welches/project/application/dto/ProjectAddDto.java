@@ -22,6 +22,7 @@ public class ProjectAddDto {
     private MultipartFile file;
     private String userId;
     private Boolean isRecruit;
+    private String bigCategory;
 
     public static ProjectAddDto toAdd(ProjectAddRequest request, MultipartFile file, String userId) {
         return ProjectAddDto.builder()
@@ -33,6 +34,7 @@ public class ProjectAddDto {
                 .isPublic(request.getIsPublic())
                 .maximumNumber(request.getMaximumNumber())
                 .file(file)
+                .bigCategory(request.getBigCategory())
                 .userId(userId)
                 .isRecruit(request.getIsRecruit())
                 .build();

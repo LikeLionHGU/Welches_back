@@ -6,6 +6,7 @@ import likelion.summer.welches.commons.jwt.JWTProvider;
 import likelion.summer.welches.project.application.dto.ProjectAddDto;
 import likelion.summer.welches.project.application.service.ProjectService;
 import likelion.summer.welches.project.presentation.request.ProjectAddRequest;
+import likelion.summer.welches.project.presentation.request.ProjectCategoryRequest;
 import likelion.summer.welches.project.presentation.response.ProjectGetResponse;
 import likelion.summer.welches.project.presentation.response.ProjectResponse;
 import lombok.RequiredArgsConstructor;
@@ -68,12 +69,40 @@ public class ProjectController {
         return ResponseEntity.ok(projectService.getFinishedList(userId));
     }
 
-    @GetMapping("/project/get/category/{category}")
-    public ResponseEntity<List<ProjectResponse>> getProjectListWithCategory(@PathVariable String category, HttpServletRequest request) {
+    @GetMapping("/project/get/category/finish/{category}/{isFinished}") // 대분류 사용하지 않고 검색하는 api
+    public ResponseEntity<List<ProjectResponse>> getProjectListWithCategoryAndFinish(HttpServletRequest request, @PathVariable String category, @PathVariable Boolean isFinished) {
         String token = jwtProvider.resolveToken(request);
         String userId = jwtProvider.getAccount(token);
 
-        return ResponseEntity.ok(projectService.getProjectListWithCategory(userId, category));
+
+        return ResponseEntity.ok(projectService.getProjectListWithCategoryAndFinish(userId, category, isFinished));
+    }
+
+    @GetMapping("/project/get/category/recruit/{category}/{isRecruit}") // 대분류 사용하지 않고 검색하는 api
+    public ResponseEntity<List<ProjectResponse>> getProjectListWithCategoryAndRecruit(HttpServletRequest request, @PathVariable String category, @PathVariable Boolean isRecruit) {
+        String token = jwtProvider.resolveToken(request);
+        String userId = jwtProvider.getAccount(token);
+
+
+        return ResponseEntity.ok(projectService.getProjectListWithCategoryAndRecruit(userId, category, isRecruit));
+    }
+
+    @GetMapping("/project/get/category/big/finish/{category}/{isFinished}") // 대분류를 사용해서 검색하는 api
+    public ResponseEntity<List<ProjectResponse>> getProjectListWithBigCategoryAndFinish(HttpServletRequest request, @PathVariable String category, @PathVariable Boolean isFinished) {
+        String token = jwtProvider.resolveToken(request);
+        String userId = jwtProvider.getAccount(token);
+
+
+        return ResponseEntity.ok(projectService.getProjectListWithBigCategoryAndFinish(userId, category, isFinished));
+    }
+
+    @GetMapping("/project/get/category/big/recruit/{category}/{isRecruit}") // 대분류를 사용해서 검색하는 api
+    public ResponseEntity<List<ProjectResponse>> getProjectListWithBigCategoryAndRecruit(HttpServletRequest request, @PathVariable String category, @PathVariable Boolean isRecruit) {
+        String token = jwtProvider.resolveToken(request);
+        String userId = jwtProvider.getAccount(token);
+
+
+        return ResponseEntity.ok(projectService.getProjectListWithBigCategoryAndRecruit(userId, category, isRecruit));
     }
 
     @PatchMapping("/project/update/owner/{userId}/{projectId}")

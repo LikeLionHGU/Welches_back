@@ -4,6 +4,7 @@ import likelion.summer.welches.commons.config.ImageUploader;
 import likelion.summer.welches.project.application.dto.ProjectAddDto;
 import likelion.summer.welches.project.domain.entity.Project;
 import likelion.summer.welches.project.domain.repository.ProjectRepository;
+import likelion.summer.welches.project.presentation.request.ProjectCategoryRequest;
 import likelion.summer.welches.project.presentation.response.ProjectGetResponse;
 import likelion.summer.welches.project.presentation.response.ProjectResponse;
 import likelion.summer.welches.user.domain.entity.User;
@@ -68,8 +69,40 @@ public class ProjectService {
     }
 
     @Transactional
-    public List<ProjectResponse> getProjectListWithCategory(String userId, String category) {
-        List<Project> projectList = projectRepository.findProjectsByCategoryEquals(category);
+    public List<ProjectResponse> getProjectListWithCategoryAndFinish(String userId, String category, Boolean isFinished) {
+        List<Project> projectList = projectRepository.findProjectsByCategoryEqualsAndIsFinished(category, isFinished);
+        List<ProjectResponse> projectResponseList = projectList.stream().map(ProjectResponse::toResponse).toList();
+
+        for(ProjectResponse p : projectResponseList) {
+            p.setIsOwner(p.getOwnerId().equals(userId)); // 현재 접속자가 해당 프로젝트의 owner일 경우에는 true를 넣어서 return
+        }
+        return projectResponseList;
+    }
+    @Transactional
+    public List<ProjectResponse> getProjectListWithCategoryAndRecruit(String userId, String category, Boolean isRecruit) {
+        List<Project> projectList = projectRepository.findProjectsByCategoryEqualsAndIsRecruit(category, isRecruit);
+        List<ProjectResponse> projectResponseList = projectList.stream().map(ProjectResponse::toResponse).toList();
+
+        for(ProjectResponse p : projectResponseList) {
+            p.setIsOwner(p.getOwnerId().equals(userId)); // 현재 접속자가 해당 프로젝트의 owner일 경우에는 true를 넣어서 return
+        }
+        return projectResponseList;
+    }
+
+    @Transactional
+    public List<ProjectResponse> getProjectListWithBigCategoryAndFinish(String userId, String bigCategory, Boolean isFinished) {
+        List<Project> projectList = projectRepository.findProjectsByBigCategoryEqualsAndIsFinished(bigCategory, isFinished);
+        List<ProjectResponse> projectResponseList = projectList.stream().map(ProjectResponse::toResponse).toList();
+
+        for(ProjectResponse p : projectResponseList) {
+            p.setIsOwner(p.getOwnerId().equals(userId)); // 현재 접속자가 해당 프로젝트의 owner일 경우에는 true를 넣어서 return
+        }
+        return projectResponseList;
+    }
+
+    @Transactional
+    public List<ProjectResponse> getProjectListWithBigCategoryAndRecruit(String userId, String bigCategory, Boolean isRecruit) {
+        List<Project> projectList = projectRepository.findProjectsByBigCategoryEqualsAndIsRecruit(bigCategory, isRecruit);
         List<ProjectResponse> projectResponseList = projectList.stream().map(ProjectResponse::toResponse).toList();
 
         for(ProjectResponse p : projectResponseList) {

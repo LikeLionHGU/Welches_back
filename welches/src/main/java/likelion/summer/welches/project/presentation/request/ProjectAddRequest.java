@@ -16,4 +16,5 @@ public class ProjectAddRequest {
     private Long maximumNumber;
     private Boolean isFinished;
     private Boolean isRecruit;
+    private String bigCategory;
 }
