@@ -43,13 +43,13 @@ public class Post extends BaseEntity {
     @LastModifiedDate
     private LocalDateTime updatedDate;
 
-    public static Post toAdd(User user, BookMark bookMark, String contents, Boolean isAllowed) { // 처음에 생성하는 부분
+    public static Post toAdd(User user, BookMark bookMark, String contents) { // 처음에 생성하는 부분
         return Post.builder()
                 .user(user)
                 .bookMark(bookMark)
                 .contents(contents)
                 .isConfirmed(false)
-                .isAllowed(isAllowed)
+                .isAllowed(false)
                 .build();
     }
 }

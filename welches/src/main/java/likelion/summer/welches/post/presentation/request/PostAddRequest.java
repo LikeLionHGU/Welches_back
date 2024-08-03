@@ -8,5 +8,5 @@ import lombok.Setter;
 public class PostAddRequest {
     private String contents;
     private Long bookMarkId;
-    private Boolean isAllowed;
+
 }

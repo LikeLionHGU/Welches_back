@@ -5,12 +5,18 @@ import likelion.summer.welches.bookMark.domain.repository.BookMarkRepository;
 import likelion.summer.welches.bookMark.presentation.request.BookMarkAddRequest;
 import likelion.summer.welches.bookMark.presentation.request.BookMarkUpdateRequest;
 import likelion.summer.welches.bookMark.presentation.response.BookMarkResponse;
+import likelion.summer.welches.post.domain.entity.Post;
+import likelion.summer.welches.post.presentation.response.PostGetResponse;
 import likelion.summer.welches.project.domain.entity.Project;
 import likelion.summer.welches.project.domain.repository.ProjectRepository;
 import likelion.summer.welches.userBookMark.application.service.UserBookMarkService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Comparator;
+import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -55,5 +61,25 @@ public class BookMarkService {
 
         bookMarkRepository.save(bookMark);
         return bookMark.getId();
+    }
+
+    @Transactional
+    public PostGetResponse getDefaultPost(Long bookmarkId) {
+        BookMark bookMark = bookMarkRepository.findById(bookmarkId).orElse(null);
+        List<Post> postList = bookMark.getPostList();
+
+        if(!postList.isEmpty()) {
+            Post response = postList.stream()
+                    .filter(post -> post.getIsConfirmed() && post.getIsAllowed()) // 컨펌 완료 및 승인
+                    .max(Comparator.comparing(Post::getUpdatedDate)).orElse(null);
+
+            if(response != null) {
+                return PostGetResponse.toResponse(response);
+            } else {
+                return null;
+            }
+
+        }
+        return null;
     }
 }

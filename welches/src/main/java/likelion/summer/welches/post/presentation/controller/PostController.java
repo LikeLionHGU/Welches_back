@@ -25,7 +25,7 @@ public class PostController {
         String token = jwtProvider.resolveToken(request);
         String userId = jwtProvider.getAccount(token);
 
-        return ResponseEntity.ok(postService.addPost(userId, postAddRequest.getContents(), postAddRequest.getBookMarkId(), postAddRequest.getIsAllowed()));
+        return ResponseEntity.ok(postService.addPost(userId, postAddRequest.getContents(), postAddRequest.getBookMarkId()));
     }
 
     @PatchMapping("/post/confirm")

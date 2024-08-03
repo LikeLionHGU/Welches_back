@@ -41,4 +41,12 @@ public class CommunityPostController {
 
         return ResponseEntity.ok(communityPostService.getCommunityPost(userId, id));
     }
+
+    @GetMapping("/post/community/get/one/{id}")
+    public ResponseEntity<CommunityPostResponse> getCommunityPost(HttpServletRequest request, @PathVariable Long id) { // communityPostId
+        String token = jwtProvider.resolveToken(request);
+        String userId = jwtProvider.getAccount(token);
+
+        return ResponseEntity.ok(communityPostService.getPost(userId, id));
+    }
 }

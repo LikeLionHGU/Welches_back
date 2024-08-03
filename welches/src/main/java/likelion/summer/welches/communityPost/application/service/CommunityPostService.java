@@ -61,4 +61,10 @@ public class CommunityPostService {
         List<CommunityPost> postList = communityPostRepository.findCommunityPostByProjectId(projectId);
         return postList.stream().map((CommunityPost communityPost) -> CommunityPostResponse.toResponse(communityPost, userId)).toList();
     }
+
+    @Transactional
+    public CommunityPostResponse getPost(String userId, Long postId) {
+        CommunityPost communityPost = communityPostRepository.findById(postId).orElse(null);
+        return CommunityPostResponse.toResponse(communityPost, userId);
+    }
 }

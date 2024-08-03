@@ -16,6 +16,7 @@ public class ProjectResponse {
     private String category;
     private String name;
     private String information;
+    private String description;
     private Boolean isPublic;
     private Long maximumNumber;
     private Boolean isFinished;
@@ -23,10 +24,15 @@ public class ProjectResponse {
     private String ownerId;
     private Long likeCount;
     private Boolean isRecruit;
+    private String ownerName;
+    private Long people;
 
     public static ProjectResponse toResponse(Project project) {
         return ProjectResponse.builder()
                 .id(project.getId())
+                .ownerName(project.getUser().getName())
+                .people(Long.valueOf(project.getUserProjectList().size()))
+                .description(project.getDescription())
                 .imageAddress(project.getImageAddress())
                 .category(project.getCategory())
                 .name(project.getName())

@@ -29,8 +29,8 @@ public class PostService {
     private final UserProjectRepository userProjectRepository;
 
     @Transactional
-    public Long addPost(String userId, String contents, Long bookMarkId, Boolean isAllowed) {
-        return postRepository.save(Post.toAdd(userRepository.findUserByUserId(userId), bookMarkRepository.findById(bookMarkId).orElse(null), contents, isAllowed)).getId();
+    public Long addPost(String userId, String contents, Long bookMarkId) {
+        return postRepository.save(Post.toAdd(userRepository.findUserByUserId(userId), bookMarkRepository.findById(bookMarkId).orElse(null), contents)).getId();
     }
 
     @Transactional

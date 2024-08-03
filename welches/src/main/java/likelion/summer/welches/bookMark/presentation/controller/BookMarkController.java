@@ -6,6 +6,7 @@ import likelion.summer.welches.bookMark.presentation.request.BookMarkAddRequest;
 import likelion.summer.welches.bookMark.presentation.request.BookMarkUpdateRequest;
 import likelion.summer.welches.bookMark.presentation.response.BookMarkResponse;
 import likelion.summer.welches.commons.jwt.JWTProvider;
+import likelion.summer.welches.post.presentation.response.PostGetResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,5 +33,11 @@ public class BookMarkController {
     @PatchMapping("/bookmark/update/{id}")
     public ResponseEntity<Long> updateBookMark(@PathVariable Long id, @RequestBody BookMarkUpdateRequest request) {
         return ResponseEntity.ok(bookMarkService.updateBookMark(id, request));
+    }
+
+
+    @GetMapping("/bookmark/get/default/{id}")
+    public ResponseEntity<PostGetResponse> getDefaultPost(@PathVariable Long id) { // id는 갈피 아이디
+        return ResponseEntity.ok(bookMarkService.getDefaultPost(id));
     }
 }
