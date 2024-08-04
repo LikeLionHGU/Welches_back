@@ -31,7 +31,7 @@ public class CommunityPostController {
         String token = jwtProvider.resolveToken(request);
         String userId = jwtProvider.getAccount(token);
 
-        return ResponseEntity.ok(communityPostService.deleteCommunityPost(userId, id));
+        return ResponseEntity.ok(communityPostService.deleteCommunityPost(id));
     }
 
     @GetMapping("/post/community/get/{id}")

@@ -27,6 +27,6 @@ public class CommunityPostCommentController {
         String token = jwtProvider.resolveToken(request);
         String userId = jwtProvider.getAccount(token);
 
-        return ResponseEntity.ok(communityPostCommentService.deleteComment(userId, id));
+        return ResponseEntity.ok(communityPostCommentService.deleteComment(id));
     }
 }

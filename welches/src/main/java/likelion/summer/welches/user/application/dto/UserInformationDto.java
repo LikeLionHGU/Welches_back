@@ -12,11 +12,13 @@ import lombok.*;
 public class UserInformationDto {
     private String id;
     private String name;
+    private String imageAddress;
 
     public static UserInformationDto toResponse(UserApplication userApplication) {
         return UserInformationDto.builder()
                 .id(userApplication.getUser().getId())
                 .name(userApplication.getUser().getName())
+                .imageAddress(userApplication.getUser().getProfileImageAddress())
                 .build();
     }
 
@@ -24,6 +26,7 @@ public class UserInformationDto {
         return UserInformationDto.builder()
                 .id(userProject.getUser().getId())
                 .name(userProject.getUser().getName())
+                .imageAddress(userProject.getUser().getProfileImageAddress())
                 .build();
     }
 }

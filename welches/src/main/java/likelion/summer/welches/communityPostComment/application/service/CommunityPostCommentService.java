@@ -26,15 +26,13 @@ public class CommunityPostCommentService {
     }
 
     @Transactional
-    public Long deleteComment(String userId, Long postCommentId) {
+    public Long deleteComment(Long postCommentId) {
         CommunityPostComment communityPostComment = communityPostCommentRepository.findById(postCommentId).orElse(null);
         if(communityPostComment != null) {
             List<CommunityPostCommentLike> communityPostCommentLikeList = communityPostComment.getCommunityPostCommentLikeList();
             communityPostCommentLikeRepository.deleteAll(communityPostCommentLikeList); // 관련 댓글 좋아요 모두 삭제
 
-            if(communityPostComment.getUser().getId().equals(userId)) {
-                communityPostCommentRepository.delete(communityPostComment);
-            }
+            communityPostCommentRepository.delete(communityPostComment);
         }
 
 

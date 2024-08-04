@@ -39,13 +39,13 @@ public class CommunityPostService {
     }
 
     @Transactional
-    public Long deleteCommunityPost(String userId, Long postId) {
+    public Long deleteCommunityPost(Long postId) {
         CommunityPost communityPost = communityPostRepository.findById(postId).orElse(null);
 
         if(communityPost != null) {
             List<CommunityPostComment> communityPostCommentList = communityPost.getCommunityPostComment();
             for(CommunityPostComment p : communityPostCommentList) {
-                communityPostCommentService.deleteComment(userId, p.getId());
+                communityPostCommentService.deleteComment(p.getId()); // 유저 아이디에 상관 없이 모두 다 지워야 함
             }
             List<CommunityPostLike> communityPostLikeList = communityPost.getCommunityPostLikeList();
             communityPostLikeRepository.deleteAll(communityPostLikeList);

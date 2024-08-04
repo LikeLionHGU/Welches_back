@@ -32,8 +32,10 @@ public class TemporaryPostService {
 
     @Transactional
     public TemporaryPostDto getTemporaryPost(String userId, Long bookMarkId) {
+        System.out.println("!@#!@#!@#@!");
         TemporaryPost temporaryPost = temporaryPostRepository.findTemporaryPostByUserIdAndBookMarkId(userId, bookMarkId);
         if(temporaryPost != null) {
+            System.out.println(">A>A>A>A>A>A");
             return TemporaryPostDto.toGet(temporaryPost);
         } else {
             return null;

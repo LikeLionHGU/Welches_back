@@ -1,16 +1,27 @@
 package likelion.summer.welches.project.application.service;
 
+import likelion.summer.welches.bookMark.application.service.BookMarkService;
+import likelion.summer.welches.bookMark.domain.entity.BookMark;
 import likelion.summer.welches.commons.config.ImageUploader;
+import likelion.summer.welches.communityPost.application.service.CommunityPostService;
+import likelion.summer.welches.communityPost.domain.entity.CommunityPost;
 import likelion.summer.welches.project.application.dto.ProjectAddDto;
 import likelion.summer.welches.project.domain.entity.Project;
 import likelion.summer.welches.project.domain.repository.ProjectRepository;
 import likelion.summer.welches.project.presentation.request.ProjectCategoryRequest;
 import likelion.summer.welches.project.presentation.response.ProjectGetResponse;
 import likelion.summer.welches.project.presentation.response.ProjectResponse;
+import likelion.summer.welches.projectComment.application.service.ProjectCommentService;
+import likelion.summer.welches.projectComment.domain.entity.ProjectComment;
+import likelion.summer.welches.projectLike.domain.entity.ProjectLike;
+import likelion.summer.welches.projectLike.domain.repository.ProjectLikeRepository;
 import likelion.summer.welches.user.domain.entity.User;
 import likelion.summer.welches.user.domain.repository.UserRepository;
+import likelion.summer.welches.userApplication.domain.entity.UserApplication;
+import likelion.summer.welches.userApplication.domain.repository.UserApplicationRepository;
 import likelion.summer.welches.userProject.application.service.UserProjectService;
 import likelion.summer.welches.userProject.domain.entity.UserProject;
+import likelion.summer.welches.userProject.domain.repository.UserProjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
@@ -26,10 +37,19 @@ public class ProjectService {
     private final ImageUploader imageUploader;
     private final UserRepository userRepository;
     private final UserProjectService userProjectService;
+    private final CommunityPostService communityPostService;
+    private final ProjectLikeRepository projectLikeRepository;
+    private final UserApplicationRepository userApplicationRepository;
+    private final UserProjectRepository userProjectRepository;
+    private final BookMarkService bookMarkService;
+    private final ProjectCommentService projectCommentService;
 
     @Transactional
     public Long addProject(ProjectAddDto dto) {
-        String imageUrl = imageUploader.toUpload(dto.getFile());
+        String imageUrl = null;
+        if(dto.getFile() != null) {
+            imageUrl = imageUploader.toUpload(dto.getFile());
+        }
         User user = userRepository.findUserByUserId(dto.getUserId());
 
         Project project = projectRepository.save(Project.toAdd(dto, imageUrl, user));
@@ -147,4 +167,36 @@ public class ProjectService {
 //        Project project = projectRepository.findById(projectId).orElse(null);
 //        ProjectResponse projectResponse
 //    }
+
+    @Transactional
+    public Long deleteProject(Long projectId) {
+        Project project = projectRepository.findById(projectId).orElse(null);
+
+        List<CommunityPost> communityPostList = project.getCommunityPostList();
+        for(CommunityPost p : communityPostList) { // community post 삭제 / 삭제 시에 달려있는 댓글과 좋아요는 자동적으로 모두 삭제됨
+            communityPostService.deleteCommunityPost(p.getId());
+        }
+
+        List<ProjectLike> projectLikeList = project.getProjectLikeList(); // 프로젝트 좋아요 모두 삭제
+        projectLikeRepository.deleteAll(projectLikeList);
+
+        List<UserApplication> userApplicationList = project.getUserApplicationList();
+        userApplicationRepository.deleteAll(userApplicationList); // 신청자 정보 모두 삭제
+
+        List<UserProject> userProjectList = project.getUserProjectList();
+        userProjectRepository.deleteAll(userProjectList); // 프로젝트 참여자 모두 삭제
+
+        List<BookMark> bookMarkList = project.getBookMarkList();
+        for(BookMark b : bookMarkList) {
+            bookMarkService.deleteBookMark(b.getId());
+        } // 갈피 모두 삭제
+
+        List<ProjectComment> projectCommentList = project.getProjectCommentList();
+        for(ProjectComment p : projectCommentList) {
+            projectCommentService.deleteProjectComment(p.getId());
+        } // 프로젝트 댓글 모두 삭제
+
+        projectRepository.delete(project);
+        return projectId;
+    }
 }

@@ -24,7 +24,7 @@ public class ProjectController {
     private final JWTProvider jwtProvider;
 
     @PostMapping(value = "/project/add", consumes = "multipart/form-data")
-    public ResponseEntity<Long> addProject(@RequestPart("post") ProjectAddRequest projectAddRequest, @RequestPart("file") MultipartFile file, HttpServletRequest request) {
+    public ResponseEntity<Long> addProject(@RequestPart("post") ProjectAddRequest projectAddRequest, @RequestPart(value = "file", required = false) MultipartFile file, HttpServletRequest request) {
         String token = jwtProvider.resolveToken(request);
         String userId = jwtProvider.getAccount(token);
 
@@ -119,5 +119,10 @@ public class ProjectController {
     @GetMapping("/project/get/best")
     public ResponseEntity<List<ProjectResponse>> getBestProject() {
         return ResponseEntity.ok(projectService.getBestProjectList());
+    }
+
+    @DeleteMapping("/project/delete/{id}")
+    public ResponseEntity<Long> deleteProject(@PathVariable Long id) {
+        return ResponseEntity.ok(projectService.deleteProject(id));
     }
 }

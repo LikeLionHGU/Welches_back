@@ -8,6 +8,7 @@ import likelion.summer.welches.bookMark.presentation.response.BookMarkResponse;
 import likelion.summer.welches.commons.jwt.JWTProvider;
 import likelion.summer.welches.post.presentation.response.PostGetResponse;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,5 +40,13 @@ public class BookMarkController {
     @GetMapping("/bookmark/get/default/{id}")
     public ResponseEntity<PostGetResponse> getDefaultPost(@PathVariable Long id) { // id는 갈피 아이디
         return ResponseEntity.ok(bookMarkService.getDefaultPost(id));
+    }
+
+    @DeleteMapping("/bookmark/delete/{id}")
+    public ResponseEntity<Long> deleteBookmark(HttpServletRequest request, @PathVariable Long id) { // id는 갈피 아이디
+        String token = jwtProvider.resolveToken(request);
+        String userId = jwtProvider.getAccount(token);
+
+        return ResponseEntity.ok(bookMarkService.deleteBookMark(id));
     }
 }

@@ -7,6 +7,8 @@ import likelion.summer.welches.post.domain.repository.PostRepository;
 import likelion.summer.welches.post.presentation.response.PostBookMarkResponse;
 import likelion.summer.welches.post.presentation.response.PostGetAllResponse;
 import likelion.summer.welches.post.presentation.response.PostGetResponse;
+import likelion.summer.welches.temporaryPost.domain.entity.TemporaryPost;
+import likelion.summer.welches.temporaryPost.domain.repository.TemporaryPostRepository;
 import likelion.summer.welches.user.domain.repository.UserRepository;
 import likelion.summer.welches.userBookMark.domain.entity.UserBookMark;
 import likelion.summer.welches.userBookMark.domain.repository.UserBookMarkRepository;
@@ -27,9 +29,16 @@ public class PostService {
     private final UserRepository userRepository;
     private final BookMarkRepository bookMarkRepository;
     private final UserProjectRepository userProjectRepository;
+    private final TemporaryPostRepository temporaryPostRepository;
 
-    @Transactional
+    @Transactional// 여기서 임시 저장 게시물을 모두 삭제해야 함
     public Long addPost(String userId, String contents, Long bookMarkId) {
+        TemporaryPost temporaryPost = temporaryPostRepository.findTemporaryPostByUserIdAndBookMarkId(userId, bookMarkId);
+
+        if(temporaryPost != null) {
+            temporaryPostRepository.delete(temporaryPost);
+        }
+
         return postRepository.save(Post.toAdd(userRepository.findUserByUserId(userId), bookMarkRepository.findById(bookMarkId).orElse(null), contents)).getId();
     }
 
@@ -129,4 +138,6 @@ public class PostService {
         }
 
     }
+
+
 }

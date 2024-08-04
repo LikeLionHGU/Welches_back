@@ -39,6 +39,8 @@ public class User extends BaseEntity {
     private String name;
     private String email;
     private String information; // 자기소개 글
+    private String profileImageAddress;
+    private String backgroundImageAddress;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Project> projectList;

@@ -16,12 +16,12 @@ public class SubscribeUserController {
     private final SubscribeUserService subscribeUserService;
     private final JWTProvider jwtProvider;
 
-    @PostMapping("/subscribe/add/{id}")
+    @PostMapping("/subscribe/switch/{id}")
     public ResponseEntity<Long> addSubscribeUser(HttpServletRequest request, @PathVariable String id) {
         String token = jwtProvider.resolveToken(request);
-        String userId = jwtProvider.getAccount(token);
+        String myId = jwtProvider.getAccount(token);
 
-        return ResponseEntity.ok(subscribeUserService.addSubscribeUser(userId, id));
+        return ResponseEntity.ok(subscribeUserService.switchSubscribe(id, myId));
     }
 
     @DeleteMapping("/subscribe/delete/{id}")

@@ -92,7 +92,7 @@ public class SecurityConfig {
         CorsConfiguration config = new CorsConfiguration();
 
 
-        config.setAllowedOrigins(List.of("http://localhost:3000"));
+        config.setAllowedOrigins(List.of("http://localhost:3000", "https://sseuim.netlify.app"));
         config.setAllowedMethods(Arrays.asList("POST", "GET", "PUT", "DELETE", "PATCH"));
         config.setAllowedHeaders(Arrays.asList(
                 HttpHeaders.AUTHORIZATION,

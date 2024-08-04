@@ -29,4 +29,21 @@ public class SubscribeUserService {
 
         return response;
     }
+
+    @Transactional
+    public Long switchSubscribe(String userId, String myId) {
+        SubscribeUser subscribeUser = subscribeUserRepository.findSubscribeUserByUserIdAndSubscribeUserId(myId, userId);
+        Long id;
+        if(subscribeUser != null) {
+            id = subscribeUser.getId();
+            subscribeUserRepository.delete(subscribeUser);
+
+        } else {
+
+            User user = userRepository.findUserByUserId(myId);
+            id = subscribeUserRepository.save(SubscribeUser.toAdd(user, userId)).getId();
+        }
+
+        return id;
+    }
 }

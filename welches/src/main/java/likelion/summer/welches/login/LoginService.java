@@ -57,6 +57,8 @@ public class LoginService {
                     .id(googleUser.getId())
                     .name(googleUser.getName())
                     .email(googleUser.getEmail())
+                    .profileImageAddress("https://kr.object.ncloudstorage.com/spacepic/1722777735860_%E1%84%91%E1%85%B3%E1%84%85%E1%85%A9%E1%84%91%E1%85%B5%E1%86%AF_default.jpg")
+                    .backgroundImageAddress("https://kr.object.ncloudstorage.com/spacepic/1722777736131_default%20wallpaper.jpg")
                     .build();
             user.setRoles(Collections.singletonList(Authority.builder().name("ROLE_USER").build()));
             userRepository.save(user);

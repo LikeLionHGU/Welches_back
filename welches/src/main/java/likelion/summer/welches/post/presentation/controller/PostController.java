@@ -66,22 +66,10 @@ public class PostController {
         return ResponseEntity.ok(postService.getAllConfirmedPosts(id));
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     @GetMapping("/post/get/bookmark/{id}") // 현재 갈피의 최신 버전 가져오기
     public ResponseEntity<PostBookMarkResponse> getCurrentPost(@PathVariable Long id) {
         return ResponseEntity.ok(postService.getCurrentPost(id));
     }
+
+
 }

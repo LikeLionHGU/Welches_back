@@ -33,6 +33,7 @@ public class ProjectGetResponse {
     private Boolean isOwner;
     private Boolean isParticipate;
     private List<UserInformationDto> userProjectList;
+    private List<UserInformationDto> userApplicationList;
     private List<BookMarkDto> bookMarkList;
     private List<ProjectCommentDto> commentList;
 
@@ -83,6 +84,7 @@ public class ProjectGetResponse {
                 .maximumNumber(project.getMaximumNumber())
                 .isFinished(project.getIsFinished())
                 .userProjectList(project.getUserProjectList().stream().map(UserInformationDto::toResponse).toList())
+                .userApplicationList(project.getUserApplicationList().stream().map(UserInformationDto::toResponse).toList())
                 .bookMarkList(project.getBookMarkList().stream().map(BookMarkDto::toResponse).toList())
                 .commentList(project.getProjectCommentList().stream().map((ProjectComment projectComment) -> ProjectCommentDto.toResponse(projectComment, userId)).toList())
                 .build();

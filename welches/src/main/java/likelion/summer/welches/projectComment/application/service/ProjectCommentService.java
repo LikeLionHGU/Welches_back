@@ -36,7 +36,7 @@ public class ProjectCommentService {
 
         if(projectComment != null) {
             System.out.println("?!");
-            projectCommentLikeService.removeAllLikes(projectCommentId);
+            projectCommentLikeService.removeAllLikes(projectCommentId); // 좋아요도 모두 삭제
             projectCommentRepository.delete(projectComment);
         }
     }
