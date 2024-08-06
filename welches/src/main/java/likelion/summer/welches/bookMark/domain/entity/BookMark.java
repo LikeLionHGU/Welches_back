@@ -32,6 +32,7 @@ public class BookMark extends BaseEntity {
     private Boolean isShared;
 
     private Boolean isSameTime;
+    private Boolean isCurrentEdit;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Project project;
@@ -58,6 +59,7 @@ public class BookMark extends BaseEntity {
                 .isSameTime(request.getIsSameTime())
                 .isShared(request.getIsShared())
                 .name(request.getName())
+                .isCurrentEdit(false)
                 .build();
     }
 }

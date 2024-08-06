@@ -22,9 +22,9 @@ public class UserApplicationController {
         return ResponseEntity.ok(userApplicationService.addRequest(userId, id));
     }
 
-    @DeleteMapping("/project/application/delete")
-    public ResponseEntity<Long> deleteUserRequest(@RequestBody UserApplicationDeleteRequest userApplicationDeleteRequest) {
-        return ResponseEntity.ok(userApplicationService.deleteRequest(userApplicationDeleteRequest.getUserId(), userApplicationDeleteRequest.getProjectId()));
+    @DeleteMapping("/project/application/delete/{userId}/{projectId}")
+    public ResponseEntity<Long> deleteUserRequest(@PathVariable String userId, @PathVariable Long projectId) {
+        return ResponseEntity.ok(userApplicationService.deleteRequest(userId, projectId));
     }
 
     @PostMapping("/project/application/approve")

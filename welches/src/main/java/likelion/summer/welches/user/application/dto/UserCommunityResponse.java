@@ -11,10 +11,12 @@ import lombok.*;
 public class UserCommunityResponse {
     private String id;
     private String name;
+    private String profile;
 
     public static UserCommunityResponse toResponse(User user) {
         return UserCommunityResponse.builder()
                 .id(user.getId())
+                .profile(user.getProfileImageAddress())
                 .name(user.getName())
                 .build();
     }

@@ -17,5 +17,6 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
     List<Project> findProjectsByBigCategoryEqualsAndIsRecruit(String bigCategory, Boolean isRecruit);
     List<Project> findProjectsByCategoryEqualsAndIsFinished(String category, Boolean isFinished);
     List<Project> findProjectsByCategoryEqualsAndIsRecruit(String category, Boolean isRecruit);
+    List<Project> findProjectsByNameContains(String name);
 
 }

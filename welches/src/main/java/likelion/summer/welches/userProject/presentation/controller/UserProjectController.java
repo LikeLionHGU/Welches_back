@@ -5,10 +5,7 @@ import likelion.summer.welches.userProject.presentation.request.UserProjectAddRe
 import likelion.summer.welches.userProject.presentation.request.UserProjectDeleteRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,8 +17,8 @@ public class UserProjectController {
         return ResponseEntity.ok(userProjectService.addProjectUser(request.getUserId(), request.getProjectId()));
     }
 
-    @DeleteMapping("/project/user/delete")
-    public ResponseEntity<Long> deleteUser(@RequestBody UserProjectDeleteRequest request) {
-        return ResponseEntity.ok(userProjectService.deleteProjectUser(request.getUserId(), request.getProjectId()));
+    @DeleteMapping("/project/user/delete/{userId}/{projectId}")
+    public ResponseEntity<Long> deleteUser(@PathVariable String userId, @PathVariable Long projectId) {
+        return ResponseEntity.ok(userProjectService.deleteProjectUser(userId, projectId));
     }
 }

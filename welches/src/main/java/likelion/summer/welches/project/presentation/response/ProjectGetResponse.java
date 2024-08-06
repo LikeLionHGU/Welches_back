@@ -1,12 +1,13 @@
 package likelion.summer.welches.project.presentation.response;
 
 import likelion.summer.welches.bookMark.application.dto.BookMarkDto;
+import likelion.summer.welches.bookMark.domain.entity.BookMark;
 import likelion.summer.welches.project.domain.entity.Project;
 import likelion.summer.welches.projectComment.application.dto.ProjectCommentDto;
 import likelion.summer.welches.projectComment.domain.entity.ProjectComment;
-import likelion.summer.welches.projectCommentLike.domain.entity.ProjectCommentLike;
 import likelion.summer.welches.projectLike.domain.entity.ProjectLike;
 import likelion.summer.welches.user.application.dto.UserInformationDto;
+import likelion.summer.welches.userApplication.domain.entity.UserApplication;
 import likelion.summer.welches.userProject.domain.entity.UserProject;
 import lombok.*;
 
@@ -32,6 +33,8 @@ public class ProjectGetResponse {
     private Long likeCount;
     private Boolean isOwner;
     private Boolean isParticipate;
+    private Boolean isRecruit;
+    private Boolean isApplication;
     private List<UserInformationDto> userProjectList;
     private List<UserInformationDto> userApplicationList;
     private List<BookMarkDto> bookMarkList;
@@ -51,6 +54,7 @@ public class ProjectGetResponse {
 
         Boolean isOwner = Boolean.FALSE;
         Boolean isParticipate = Boolean.FALSE;
+        Boolean isApplication = Boolean.FALSE;
 
         if(project.getUser().getId().equals(userId)) {
             isOwner = Boolean.TRUE;
@@ -64,6 +68,13 @@ public class ProjectGetResponse {
             }
         }
 
+        List<UserApplication> userApplications = project.getUserApplicationList();
+        for(UserApplication p : userApplications) {
+            if(p.getUser().getId().equals(userId)) {
+                isApplication = Boolean.TRUE;
+            }
+        }
+
 
 
 
@@ -71,11 +82,13 @@ public class ProjectGetResponse {
 
         return ProjectGetResponse.builder()
                 .id(project.getId())
+                .isRecruit(project.getIsRecruit())
                 .description(project.getDescription())
                 .likeCount(Long.valueOf(project.getProjectLikeList().size()))
                 .isLiked(temp)
                 .isOwner(isOwner)
                 .isParticipate(isParticipate)
+                .isApplication(isApplication)
                 .imageAddress(project.getImageAddress())
                 .category(project.getCategory())
                 .name(project.getName())
@@ -85,7 +98,7 @@ public class ProjectGetResponse {
                 .isFinished(project.getIsFinished())
                 .userProjectList(project.getUserProjectList().stream().map(UserInformationDto::toResponse).toList())
                 .userApplicationList(project.getUserApplicationList().stream().map(UserInformationDto::toResponse).toList())
-                .bookMarkList(project.getBookMarkList().stream().map(BookMarkDto::toResponse).toList())
+                .bookMarkList(project.getBookMarkList().stream().map((BookMark bookMark) -> BookMarkDto.toResponse(bookMark, userId)).toList())
                 .commentList(project.getProjectCommentList().stream().map((ProjectComment projectComment) -> ProjectCommentDto.toResponse(projectComment, userId)).toList())
                 .build();
 

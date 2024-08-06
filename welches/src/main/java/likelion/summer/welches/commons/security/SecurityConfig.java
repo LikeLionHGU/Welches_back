@@ -41,6 +41,7 @@ public class SecurityConfig {
                 // /user 로 시작하는 요청은 USER 권한이 있는 유저에게만 허용
                 .requestMatchers("/user/**").permitAll()
                 .requestMatchers("/project/add").permitAll()
+                .requestMatchers("/project/delete/**").permitAll()
                 .requestMatchers("/project/get/**").permitAll()
                 .requestMatchers("/project/comment/**").permitAll()
                 .requestMatchers("/project/like/**").permitAll()

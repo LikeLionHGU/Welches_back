@@ -30,7 +30,7 @@ public class PostController {
 
     @PatchMapping("/post/confirm")
     public ResponseEntity<Long> confirmPost(@RequestBody PostConfirmRequest request) {
-        return ResponseEntity.ok(postService.confirmPost(request.getId(), request.getIsAllowed(), request.getRejectedReason()));
+        return ResponseEntity.ok(postService.confirmPost(request.getId(), request.getIsAllowed(), request.getRejectedReason(), request.getContents()));
     }
 
     @GetMapping("/post/get/{id}") // id는 postId

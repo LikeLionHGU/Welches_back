@@ -16,6 +16,7 @@ import likelion.summer.welches.userProject.domain.entity.UserProject;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
@@ -68,14 +69,20 @@ public class UserService {
     public String updateUser(MultipartFile profile, MultipartFile back, UserRequest request, String userId) {
         User user = userRepository.findUserByUserId(userId);
 
-        if(profile != null) {
+
+        if(!profile.isEmpty()) {
             String profileImageAddress = imageUploader.toUpload(profile);
             user.setProfileImageAddress(profileImageAddress);
         }
 
-        if(back != null) {
+
+
+        if(back != null && !profile.isEmpty()) {
+
             String backImageAddress = imageUploader.toUpload(back);
+
             user.setBackgroundImageAddress(backImageAddress);
+
         }
 
         user.setName(request.getName());

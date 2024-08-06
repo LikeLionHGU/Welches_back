@@ -18,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 public class UserController {
@@ -33,8 +35,10 @@ public class UserController {
         return ResponseEntity.ok(userService.getUserInfo(userId));
     }
 
-    @PatchMapping(value = "/user/update", consumes = "multipart/form-data")
-    public ResponseEntity<String> updateUser(HttpServletRequest request, @RequestPart("post") UserRequest userRequest, @RequestPart(value = "back", required = false) MultipartFile back, @RequestPart(value = "profile", required = false) MultipartFile profile) {
+    @PostMapping(value = "/user/update", consumes = "multipart/form-data")
+    public ResponseEntity<String> updateUser(HttpServletRequest request, @RequestPart(value = "post", required = false) UserRequest userRequest, @RequestPart(value = "profile", required = false) MultipartFile profile, @RequestPart(value = "back", required = false) MultipartFile back) {
+
+
         String token = jwtProvider.resolveToken(request);
         String userId = jwtProvider.getAccount(token);
 

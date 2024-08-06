@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import likelion.summer.welches.commons.jwt.JWTProvider;
 import likelion.summer.welches.communityPost.application.service.CommunityPostService;
 import likelion.summer.welches.communityPost.presentation.request.CommunityPostAddRequest;
+import likelion.summer.welches.communityPost.presentation.request.CommunityPostUpdateRequest;
 import likelion.summer.welches.communityPost.presentation.response.CommunityPostResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -49,4 +50,12 @@ public class CommunityPostController {
 
         return ResponseEntity.ok(communityPostService.getPost(userId, id));
     }
+    @PatchMapping(value = "/post/community/update", consumes = "multipart/form-data")
+    public ResponseEntity<Long> updateCommunityPost(HttpServletRequest request, @RequestPart("post") CommunityPostUpdateRequest updateRequest, @RequestPart(value = "file", required = false) MultipartFile file) {
+        String token = jwtProvider.resolveToken(request);
+        String userId = jwtProvider.getAccount(token);
+
+        return ResponseEntity.ok(communityPostService.updateCommunityPost(updateRequest.getTitle(), updateRequest.getContents(), file, updateRequest.getPostId()));
+    }
+
 }

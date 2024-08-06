@@ -44,6 +44,12 @@ public class LoginController {
                 .queryParam("token", token)
                 .build().toUriString();
 
+//        String redirectUrl = UriComponentsBuilder.fromUriString("https://sseuim.netlify.app")
+//                .queryParam("userId", userId)
+//                .queryParam("userName", userName)
+//                .queryParam("token", token)
+//                .build().toUriString();
+
         response.sendRedirect(redirectUrl);
     }
 

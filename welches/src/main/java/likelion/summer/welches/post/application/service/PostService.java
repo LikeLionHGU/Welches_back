@@ -34,6 +34,9 @@ public class PostService {
     @Transactional// 여기서 임시 저장 게시물을 모두 삭제해야 함
     public Long addPost(String userId, String contents, Long bookMarkId) {
         TemporaryPost temporaryPost = temporaryPostRepository.findTemporaryPostByUserIdAndBookMarkId(userId, bookMarkId);
+        BookMark bookMark = bookMarkRepository.findById(bookMarkId).orElse(null);
+        bookMark.setIsCurrentEdit(false);
+        bookMarkRepository.save(bookMark);
 
         if(temporaryPost != null) {
             temporaryPostRepository.delete(temporaryPost);
@@ -43,13 +46,14 @@ public class PostService {
     }
 
     @Transactional
-    public Long confirmPost(Long postId, Boolean isAllowed, String rejectedReason) {
+    public Long confirmPost(Long postId, Boolean isAllowed, String rejectedReason, String contents) {
         Post post = postRepository.findById(postId).orElse(null);
 
         if(post != null) {
             post.setIsAllowed(isAllowed);
             post.setIsConfirmed(true);
             post.setRejectedReason(rejectedReason);
+            post.setContents(contents);
             postRepository.save(post);
 
             return post.getId();

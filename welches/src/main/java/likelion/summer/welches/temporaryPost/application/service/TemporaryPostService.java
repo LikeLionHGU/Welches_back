@@ -1,5 +1,6 @@
 package likelion.summer.welches.temporaryPost.application.service;
 
+import likelion.summer.welches.bookMark.domain.entity.BookMark;
 import likelion.summer.welches.bookMark.domain.repository.BookMarkRepository;
 import likelion.summer.welches.temporaryPost.application.dto.TemporaryPostDto;
 import likelion.summer.welches.temporaryPost.domain.entity.TemporaryPost;
@@ -20,22 +21,28 @@ public class TemporaryPostService {
     public Long upload(String userId, String contents, Long bookMarkId) {
         TemporaryPost temporaryPost = temporaryPostRepository.findTemporaryPostByUserIdAndBookMarkId(userId, bookMarkId);
 
+        BookMark bookMark = bookMarkRepository.findById(bookMarkId).orElse(null);
+        bookMark.setIsCurrentEdit(true);
+        bookMarkRepository.save(bookMark);
+
         if(temporaryPost != null) {
             temporaryPostRepository.delete(temporaryPost);
+
             return temporaryPostRepository.save(TemporaryPost.toAdd(userRepository.findUserByUserId(userId), bookMarkRepository.findById(bookMarkId).orElse(null), contents)).getId();
 
 
         } else {
+
             return temporaryPostRepository.save(TemporaryPost.toAdd(userRepository.findUserByUserId(userId), bookMarkRepository.findById(bookMarkId).orElse(null), contents)).getId();
         }
     }
 
     @Transactional
     public TemporaryPostDto getTemporaryPost(String userId, Long bookMarkId) {
-        System.out.println("!@#!@#!@#@!");
+
         TemporaryPost temporaryPost = temporaryPostRepository.findTemporaryPostByUserIdAndBookMarkId(userId, bookMarkId);
         if(temporaryPost != null) {
-            System.out.println(">A>A>A>A>A>A");
+
             return TemporaryPostDto.toGet(temporaryPost);
         } else {
             return null;

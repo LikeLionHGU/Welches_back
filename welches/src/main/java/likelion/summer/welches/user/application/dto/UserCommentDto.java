@@ -11,10 +11,12 @@ import lombok.*;
 public class UserCommentDto {
     private String id;
     private String name;
+    private String profile;
 
     public static UserCommentDto toResponse(User user) {
         return UserCommentDto.builder()
                 .id(user.getId())
+                .profile(user.getProfileImageAddress())
                 .name(user.getName())
                 .build();
     }

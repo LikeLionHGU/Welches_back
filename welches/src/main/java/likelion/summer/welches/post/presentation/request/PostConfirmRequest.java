@@ -9,4 +9,5 @@ public class PostConfirmRequest {
     private Long id;
     private Boolean isAllowed;
     private String rejectedReason;
+    private String contents;
 }

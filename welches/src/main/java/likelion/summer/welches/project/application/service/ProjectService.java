@@ -9,6 +9,7 @@ import likelion.summer.welches.project.application.dto.ProjectAddDto;
 import likelion.summer.welches.project.domain.entity.Project;
 import likelion.summer.welches.project.domain.repository.ProjectRepository;
 import likelion.summer.welches.project.presentation.request.ProjectCategoryRequest;
+import likelion.summer.welches.project.presentation.request.ProjectUpdateRequest;
 import likelion.summer.welches.project.presentation.response.ProjectGetResponse;
 import likelion.summer.welches.project.presentation.response.ProjectResponse;
 import likelion.summer.welches.projectComment.application.service.ProjectCommentService;
@@ -26,6 +27,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -155,6 +157,34 @@ public class ProjectService {
     }
 
     @Transactional
+    public Long updateProject(ProjectUpdateRequest request, MultipartFile file) {
+        String imageUrl = null;
+        if(file != null) {
+            imageUrl = imageUploader.toUpload(file);
+        }
+
+        Project project = projectRepository.findById(request.getId()).orElse(null);
+
+        if(project != null) {
+            project.setName(request.getName());
+            project.setCategory(request.getCategory());
+            project.setInformation(request.getInformation());
+            project.setDescription(request.getDescription());
+            project.setIsPublic(request.getIsPublic());
+            project.setMaximumNumber(request.getMaximumNumber());
+            project.setIsFinished(request.getIsFinished());
+            project.setIsRecruit(request.getIsRecruit());
+            project.setBigCategory(request.getBigCategory());
+            if(imageUrl != null) {
+                project.setImageAddress(imageUrl);
+            }
+        }
+
+        projectRepository.save(project);
+        return request.getId();
+    }
+
+    @Transactional
     public List<ProjectResponse> getBestProjectList() {
         List<Project> projectList = projectRepository.findAll();
 
@@ -198,5 +228,16 @@ public class ProjectService {
 
         projectRepository.delete(project);
         return projectId;
+    }
+
+    @Transactional
+    public List<ProjectResponse> findProjectsWithName(String name, String userId) {
+        List<Project> projectList = projectRepository.findProjectsByNameContains(name);
+        List<ProjectResponse> projectResponseList = projectList.stream().map(ProjectResponse::toResponse).toList();
+
+        for(ProjectResponse p : projectResponseList) {
+            p.setIsOwner(p.getOwnerId().equals(userId)); // 현재 접속자가 해당 프로젝트의 owner일 경우에는 true를 넣어서 return
+        }
+        return projectResponseList;
     }
 }

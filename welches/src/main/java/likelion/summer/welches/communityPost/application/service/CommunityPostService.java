@@ -39,6 +39,24 @@ public class CommunityPostService {
     }
 
     @Transactional
+    public Long updateCommunityPost(String title, String contents, MultipartFile file, Long postId) {
+        String imageUrl = null;
+        if(file != null) {
+            if(!file.isEmpty()) {
+                imageUrl = imageUploader.toUpload(file);
+            }
+        }
+
+        CommunityPost communityPost = communityPostRepository.findById(postId).orElse(null);
+        communityPost.setTitle(title);
+        communityPost.setContents(contents);
+        communityPost.setImageUrl(imageUrl);
+        communityPostRepository.save(communityPost);
+
+        return postId;
+    }
+
+    @Transactional
     public Long deleteCommunityPost(Long postId) {
         CommunityPost communityPost = communityPostRepository.findById(postId).orElse(null);
 
