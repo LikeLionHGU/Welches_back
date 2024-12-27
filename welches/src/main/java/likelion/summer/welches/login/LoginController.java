@@ -37,18 +37,18 @@ public class LoginController {
         String token = URLEncoder.encode(userResponse.getToken(), StandardCharsets.UTF_8.toString());
         System.out.println(token);
 
-//
-//        String redirectUrl = UriComponentsBuilder.fromUriString("http://localhost:3000")
-//                .queryParam("userId", userId)
-//                .queryParam("userName", userName)
-//                .queryParam("token", token)
-//                .build().toUriString();
 
-        String redirectUrl = UriComponentsBuilder.fromUriString("https://sseuim.netlify.app")
+        String redirectUrl = UriComponentsBuilder.fromUriString("http://localhost:3000")
                 .queryParam("userId", userId)
                 .queryParam("userName", userName)
                 .queryParam("token", token)
                 .build().toUriString();
+
+//        String redirectUrl = UriComponentsBuilder.fromUriString("https://sseuim.netlify.app")
+//                .queryParam("userId", userId)
+//                .queryParam("userName", userName)
+//                .queryParam("token", token)
+//                .build().toUriString();
 
         response.sendRedirect(redirectUrl);
     }
