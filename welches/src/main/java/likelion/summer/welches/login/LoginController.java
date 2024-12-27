@@ -16,7 +16,7 @@ import java.nio.charset.StandardCharsets;
 @CrossOrigin("*")
 public class LoginController {
     private final LoginService loginService;
-    @CrossOrigin("*334123412312312")
+    @CrossOrigin("123")
     @PostMapping("/login/oauth2/google")
     public void socialLoginRedirect() throws IOException {
         loginService.request();
