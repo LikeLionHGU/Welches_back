@@ -15,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -45,10 +44,8 @@ public class ProjectController {
             userId = jwtProvider.getAccount(token);
         }
 
-        List<ProjectResponse> list = projectService.getAllList(userId);
-        Collections.reverse(list);
-        return ResponseEntity.ok(list);
 
+        return ResponseEntity.ok(projectService.getAllList(userId));
     }
 
     @GetMapping("/project/get/{id}")
@@ -70,10 +67,7 @@ public class ProjectController {
         String token = jwtProvider.resolveToken(request);
         String userId = jwtProvider.getAccount(token);
 
-        List<ProjectResponse> list = projectService.getFinishedList(userId);
-        Collections.reverse(list);
-
-        return ResponseEntity.ok(list);
+        return ResponseEntity.ok(projectService.getFinishedList(userId));
     }
 
     @GetMapping("/project/get/category/finish/{category}/{isFinished}") // 대분류 사용하지 않고 검색하는 api
@@ -81,10 +75,8 @@ public class ProjectController {
         String token = jwtProvider.resolveToken(request);
         String userId = jwtProvider.getAccount(token);
 
-        List<ProjectResponse> list = projectService.getProjectListWithCategoryAndFinish(userId, category, isFinished);
-        Collections.reverse(list);
 
-        return ResponseEntity.ok(list);
+        return ResponseEntity.ok(projectService.getProjectListWithCategoryAndFinish(userId, category, isFinished));
     }
 
     @GetMapping("/project/get/category/recruit/{category}/{isRecruit}") // 대분류 사용하지 않고 검색하는 api
@@ -92,29 +84,26 @@ public class ProjectController {
         String token = jwtProvider.resolveToken(request);
         String userId = jwtProvider.getAccount(token);
 
-        List<ProjectResponse> list = projectService.getProjectListWithCategoryAndRecruit(userId, category, isRecruit);
-        Collections.reverse(list);
-        return ResponseEntity.ok(list);
+
+        return ResponseEntity.ok(projectService.getProjectListWithCategoryAndRecruit(userId, category, isRecruit));
     }
 
     @GetMapping("/project/get/category/big/finish/{category}/{isFinished}") // 대분류를 사용해서 검색하는 api
     public ResponseEntity<List<ProjectResponse>> getProjectListWithBigCategoryAndFinish(HttpServletRequest request, @PathVariable String category, @PathVariable Boolean isFinished) {
         String token = jwtProvider.resolveToken(request);
         String userId = jwtProvider.getAccount(token);
-        List<ProjectResponse> list = projectService.getProjectListWithBigCategoryAndFinish(userId, category, isFinished);
 
-        Collections.reverse(list);
-        return ResponseEntity.ok(list);
+
+        return ResponseEntity.ok(projectService.getProjectListWithBigCategoryAndFinish(userId, category, isFinished));
     }
 
     @GetMapping("/project/get/category/big/recruit/{category}/{isRecruit}") // 대분류를 사용해서 검색하는 api
     public ResponseEntity<List<ProjectResponse>> getProjectListWithBigCategoryAndRecruit(HttpServletRequest request, @PathVariable String category, @PathVariable Boolean isRecruit) {
         String token = jwtProvider.resolveToken(request);
         String userId = jwtProvider.getAccount(token);
-        List<ProjectResponse> list = projectService.getProjectListWithBigCategoryAndRecruit(userId, category, isRecruit);
 
-        Collections.reverse(list);
-        return ResponseEntity.ok(list);
+
+        return ResponseEntity.ok(projectService.getProjectListWithBigCategoryAndRecruit(userId, category, isRecruit));
     }
 
     @PatchMapping("/project/update/owner/{userId}/{projectId}")
@@ -130,10 +119,7 @@ public class ProjectController {
 
     @GetMapping("/project/get/best")
     public ResponseEntity<List<ProjectResponse>> getBestProject() {
-
-        List<ProjectResponse> list = projectService.getBestProjectList();
-        Collections.reverse(list);
-        return ResponseEntity.ok(list);
+        return ResponseEntity.ok(projectService.getBestProjectList());
     }
 
     @DeleteMapping("/project/delete/{id}")

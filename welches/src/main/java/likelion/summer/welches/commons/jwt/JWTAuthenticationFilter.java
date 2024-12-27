@@ -20,10 +20,12 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         String token = jwtProvider.resolveToken(request);
         String requestURI = request.getRequestURI();
 
-        if (requestURI.startsWith("/login/oauth2/") || requestURI.startsWith("/api/v1/oauth2/google") || requestURI.startsWith("/project/get/all") || requestURI.startsWith("/project/get/best")) {
+        if (requestURI.startsWith("/login/oauth2/") || requestURI.startsWith("/api/v1/oauth2/google") || requestURI.startsWith("https://sseuim/") || requestURI.startsWith("/project/get/best")) {
             filterChain.doFilter(request, response);
             return; // 이후 로직을 실행하지 않고 리턴
         }
+
+
 
         if (token != null && jwtProvider.validateToken(token)) {
 
